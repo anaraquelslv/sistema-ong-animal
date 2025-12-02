@@ -1,10 +1,13 @@
 package com.umc.sistemaonganimal.domain.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "animal")
 public class Animal {
