@@ -1,13 +1,16 @@
 package com.umc.sistemaonganimal.domain.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
+@Getter @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "animal")
 public class Animal {
