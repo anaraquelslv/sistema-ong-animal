@@ -7,21 +7,29 @@ import java.time.LocalDate;
 
 @Getter @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
+@ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 @Entity
 @Table(name = "animal")
 public class Animal {
-//    TODO adicionar atributos sexo e porte
+//    TODO adicionar atributos sexo e porte e fazer mapeamento corretamente
 
     @Id
     @EqualsAndHashCode.Include
+    @ToString.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ToString.Include
     private String nome;
+
+    @ToString.Include
     private int idade;
+
+    @ToString.Include
     private boolean castrado;
 
     @Column(name = "dt_resgate")
