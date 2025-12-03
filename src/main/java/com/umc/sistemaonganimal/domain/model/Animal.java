@@ -1,5 +1,7 @@
 package com.umc.sistemaonganimal.domain.model;
 
+import com.umc.sistemaonganimal.domain.model.enums.AnimalPorte;
+import com.umc.sistemaonganimal.domain.model.enums.AnimalSexo;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,8 +17,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "animal")
 public class Animal {
-//    TODO adicionar atributos sexo e porte e fazer mapeamento corretamente
-
     @Id
     @EqualsAndHashCode.Include
     @ToString.Include
@@ -28,6 +28,14 @@ public class Animal {
 
     @ToString.Include
     private int idade;
+
+    @ToString.Include
+    @Enumerated(EnumType.STRING)
+    private AnimalPorte porte;
+
+    @ToString.Include
+    @Enumerated(EnumType.STRING)
+    private AnimalSexo sexo;
 
     @ToString.Include
     private boolean castrado;
