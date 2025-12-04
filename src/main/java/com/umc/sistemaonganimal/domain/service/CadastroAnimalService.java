@@ -21,7 +21,7 @@ public class CadastroAnimalService {
 
     public Animal buscarPorId(Long id){
         return animalRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Animal não encontrado com o id" + id));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Animal não encontrado com o id: " + id));
     }
 
     public Animal salvar(Animal animal) {
