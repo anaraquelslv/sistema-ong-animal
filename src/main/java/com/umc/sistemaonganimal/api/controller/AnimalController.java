@@ -15,14 +15,11 @@ import java.util.List;
 public class AnimalController {
 
     @Autowired
-    private AnimalRepository animalRepository;
-
-    @Autowired
     private CadastroAnimalService animalService;
 
     @GetMapping
     public List<Animal> listar(){
-        return animalRepository.findAll();
+        return animalService.listarTodos();
     }
 
 
