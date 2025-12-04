@@ -27,7 +27,6 @@ public class Animal {
     private Long id;
 
     @ToString.Include
-    @NotNull
     @Column(nullable = false)
     private String nome;
 
@@ -36,23 +35,19 @@ public class Animal {
     private int idade;
 
     @ToString.Include
-    @NotNull
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private AnimalPorte porte;
 
     @ToString.Include
-    @NotNull
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private AnimalSexo sexo;
 
     @ToString.Include
-    @NotNull
     @Column(nullable = false)
     private boolean castrado;
 
-    @NotNull
     @Column(name = "dt_resgate", nullable = false)
     private LocalDate dataResgate;
 
