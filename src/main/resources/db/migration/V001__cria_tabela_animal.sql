@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS animal (
     sexo VARCHAR(10) NOT NULL CHECK (sexo IN ('MACHO', 'FEMEA')),
     porte VARCHAR(10) NOT NULL CHECK (porte IN ('PEQUENO', 'MEDIO', 'GRANDE')),
     castrado BOOLEAN DEFAULT FALSE,
-    dt_resgate DATE NOT NULL NOT NULL CHECK (dt_resgate <= CURRENT_DATE),
+    dt_resgate DATE NOT NULL CHECK (dt_resgate <= CURRENT_DATE),
     dt_saida DATE,
     cor_olhos VARCHAR(20),
     cor_pelagem VARCHAR(20),
