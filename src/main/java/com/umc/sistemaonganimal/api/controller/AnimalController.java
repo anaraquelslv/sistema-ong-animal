@@ -3,6 +3,8 @@ package com.umc.sistemaonganimal.api.controller;
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.service.CadastroAnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +25,9 @@ public class AnimalController {
     }
 
     @GetMapping("/{animalId}")
-    public Animal buscarPorId(@PathVariable("animalId") Long id){
-        return animalService.buscarPorId(id);
+    public ResponseEntity<Animal> buscarPorId(@PathVariable("animalId") Long id){
+        Animal animalEncontrado = animalService.buscarPorId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(animalEncontrado);
     }
 
 
