@@ -2,6 +2,7 @@ package com.umc.sistemaonganimal.api.controller;
 
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.service.CadastroAnimalService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,20 @@ public class AnimalController {
     @PostMapping
     public Animal adicionar(@RequestBody Animal animal) {
         return animalService.salvar(animal);
+    }
+
+    // TODO Organiza status de reposta HTTP depois que adicionar chave estrangeiras: NOT FOUND: quando o id passado não for encontrado e BAD
+    //  REQUEST quando o corpo da requisição conter o id de uma chave estrageira que não existe
+
+    @PutMapping("/{animalId}")
+    public ResponseEntity<Animal> atualizar(@PathVariable Long animalId, @RequestBody Animal animal) {
+        Animal animalAtualizar = animalService.buscarPorId(animalId);
+
+        BeanUtils.copyProperties(animal, animalAtualizar, "id");
+
+        animalAtualizar = animalService.salvar(animalAtualizar);
+
+        return ResponseEntity.ok(animalAtualizar);
     }
 
 
