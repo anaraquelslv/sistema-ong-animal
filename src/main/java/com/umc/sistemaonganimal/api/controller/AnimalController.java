@@ -18,12 +18,12 @@ public class AnimalController {
     private CadastroAnimalService animalService;
 
     @GetMapping
-    public List<Animal> listar(){
+    public List<Animal> listar() {
         return animalService.listarTodos();
     }
 
     @GetMapping("/{animalId}")
-    public ResponseEntity<Animal> buscarPorId(@PathVariable("animalId") Long id){
+    public ResponseEntity<Animal> buscarPorId(@PathVariable("animalId") Long id) {
         Animal animalEncontrado = animalService.buscarPorId(id);
         return ResponseEntity.status(HttpStatus.OK).body(animalEncontrado);
     }
@@ -33,7 +33,7 @@ public class AnimalController {
         return animalService.salvar(animal);
     }
 
-    // TODO Organiza status de reposta HTTP depois que adicionar chave estrangeiras: NOT FOUND: quando o id passado não for encontrado e BAD
+    // TODO Organizar status de reposta HTTP depois que adicionar chave estrangeiras: NOT FOUND: quando o id passado não for encontrado e BAD
     //  REQUEST quando o corpo da requisição conter o id de uma chave estrageira que não existe
 
     @PutMapping("/{animalId}")
@@ -47,5 +47,11 @@ public class AnimalController {
         return ResponseEntity.ok(animalAtualizar);
     }
 
+//    TODO implementar exclusão lógica dos registros
 
+    @DeleteMapping("/{animalId}")
+    public ResponseEntity<Void> excluir(@PathVariable Long animalId) {
+        animalService.excluir(animalId);
+        return ResponseEntity.noContent().build();
+    }
 }
