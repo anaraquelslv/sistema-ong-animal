@@ -1,10 +1,7 @@
 package com.umc.sistemaonganimal.domain.exception;
 
-// TODO Alterar esse tratamento de erro para utilizar Handler Global futuramente
-
-
-public abstract class EntityNotFindException extends RuntimeException {
-    public EntityNotFindException(String message) {
+public abstract class EntityNotFoundException extends RuntimeException {
+    public EntityNotFoundException(String message) {
         super(message);
     }
 }

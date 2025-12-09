@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.CONFLICT)
-public class EntidadeEmUsoException extends RuntimeException {
-    public EntidadeEmUsoException(String message) {
+public class EntityInUseException extends RuntimeException {
+    public EntityInUseException(String message) {
         super(message);
     }
 }
