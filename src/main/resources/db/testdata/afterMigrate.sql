@@ -1,5 +1,9 @@
 TRUNCATE
-    animal
+    animal,
+    adotante,
+    status_animal,
+    especie,
+    raca
 RESTART IDENTITY CASCADE;
 
 INSERT INTO raca (nome) VALUES
