@@ -2,9 +2,7 @@ package com.umc.sistemaonganimal.domain.model;
 
 import com.umc.sistemaonganimal.domain.model.enums.AnimalPorte;
 import com.umc.sistemaonganimal.domain.model.enums.AnimalSexo;
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 

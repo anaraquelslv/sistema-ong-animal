@@ -23,18 +23,15 @@ public class AnimalController {
     }
 
     @GetMapping("/{animalId}")
-    public ResponseEntity<Animal> buscarPorId(@PathVariable("animalId") Long id) {
-        Animal animalEncontrado = animalService.buscarPorId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(animalEncontrado);
+    public Animal buscarPorId(@PathVariable("animalId") Long id) {
+        return animalService.buscarPorId(id);
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Animal adicionar(@RequestBody Animal animal) {
         return animalService.salvar(animal);
     }
-
-    // TODO Organizar status de reposta HTTP depois que adicionar chave estrangeiras: NOT FOUND: quando o id passado não for encontrado e BAD
-    //  REQUEST quando o corpo da requisição conter o id de uma chave estrageira que não existe
 
     @PutMapping("/{animalId}")
     public ResponseEntity<Animal> atualizar(@PathVariable Long animalId, @RequestBody Animal animal) {
@@ -50,6 +47,7 @@ public class AnimalController {
 //    TODO implementar exclusão lógica dos registros
 
     @DeleteMapping("/{animalId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> excluir(@PathVariable Long animalId) {
         animalService.excluir(animalId);
         return ResponseEntity.noContent().build();
