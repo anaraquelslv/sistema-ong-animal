@@ -28,7 +28,9 @@ public class AnimalController {
         return ResponseEntity.status(HttpStatus.OK).body(animalEncontrado);
     }
 
+//    TODO: Altera para erro bad request quando o corpo da requisição não for envidado corretamente (no momento está 500)
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Animal adicionar(@RequestBody Animal animal) {
         return animalService.salvar(animal);
     }
@@ -50,6 +52,7 @@ public class AnimalController {
 //    TODO implementar exclusão lógica dos registros
 
     @DeleteMapping("/{animalId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> excluir(@PathVariable Long animalId) {
         animalService.excluir(animalId);
         return ResponseEntity.noContent().build();
