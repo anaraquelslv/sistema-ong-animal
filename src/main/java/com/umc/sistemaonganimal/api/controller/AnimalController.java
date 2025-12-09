@@ -23,20 +23,15 @@ public class AnimalController {
     }
 
     @GetMapping("/{animalId}")
-    public ResponseEntity<Animal> buscarPorId(@PathVariable("animalId") Long id) {
-        Animal animalEncontrado = animalService.buscarPorId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(animalEncontrado);
+    public Animal buscarPorId(@PathVariable("animalId") Long id) {
+        return animalService.buscarPorId(id);
     }
 
-//    TODO: Altera para erro bad request quando o corpo da requisição não for envidado corretamente (no momento está 500)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Animal adicionar(@RequestBody Animal animal) {
         return animalService.salvar(animal);
     }
-
-    // TODO Organizar status de reposta HTTP depois que adicionar chave estrangeiras: NOT FOUND: quando o id passado não for encontrado e BAD
-    //  REQUEST quando o corpo da requisição conter o id de uma chave estrageira que não existe
 
     @PutMapping("/{animalId}")
     public ResponseEntity<Animal> atualizar(@PathVariable Long animalId, @RequestBody Animal animal) {
