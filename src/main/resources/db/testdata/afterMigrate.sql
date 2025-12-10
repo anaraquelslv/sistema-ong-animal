@@ -18,11 +18,11 @@ INSERT INTO raca (nome, especie_id) VALUES
 ('Poodle', 2);      -- Cachorro
 
 INSERT INTO status_animal (nome) VALUES
-('DISPONIVEL PARA ADOCAO'),
-('EM TRATAMENTO'),
-('EM QUARENTENA'),
+('DISPONIVEL_PARA_ADOCAO'),
+('EM_TRATAMENTO'),
+('EM_QUARENTENA'),
 ('ADOTADO'),
-('RECEM-RESGATADO'),
+('RECEM_RESGATADO'),
 ('FALECIDO');
 
 INSERT INTO adotante (
@@ -37,7 +37,7 @@ INSERT INTO adotante (
 
 INSERT INTO animal (
     nome, idade, sexo, porte, castrado, dt_resgate, dt_saida, cor_olhos, cor_pelagem,
-    observacao, raca_id, adotante_cpf, status_id
+    observacao, raca_id, adotante_id, status_id
 ) VALUES
 ('Mimi', 2, 'FEMEA', 'PEQUENO', TRUE, '2024-01-10', NULL, 'Verde', 'Branca',
  'Gata dócil', 2, NULL, 1),   -- Persa - disponível
@@ -49,7 +49,7 @@ INSERT INTO animal (
  'Assustada no resgate', 3, NULL, 2),  -- Siamês - em tratamento
 
 ('Thor', 4, 'MACHO', 'GRANDE', TRUE, '2024-01-15', '2024-02-01', 'Castanho', 'Amarela',
- 'Adotado rapidamente', 4, '12345678901', 4), -- Labrador adotado por Maria
+ 'Adotado rapidamente', 4, 1, 4), -- Labrador adotado por Maria
 
 ('Bob', 2, 'MACHO', 'PEQUENO', FALSE, '2024-02-20', NULL, 'Preto', 'Branca',
  'Em quarentena', 5, NULL, 3);  -- Poodle - quarentena
