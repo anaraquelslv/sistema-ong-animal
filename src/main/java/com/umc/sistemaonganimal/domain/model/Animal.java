@@ -1,7 +1,7 @@
 package com.umc.sistemaonganimal.domain.model;
 
-import com.umc.sistemaonganimal.domain.model.enums.AnimalPorte;
-import com.umc.sistemaonganimal.domain.model.enums.AnimalSexo;
+import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalPorte;
+import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalSexo;
 import jakarta.persistence.*;
 import lombok.*;
 
