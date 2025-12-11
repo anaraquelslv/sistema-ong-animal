@@ -19,6 +19,10 @@ public class Raca {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String raca;
+    @Column(nullable = false, length = 50)
+    private String nome;
+
+    @ManyToOne
+    @JoinColumn(name = "especie_id", nullable = false)
+    private Especie especie;
 }
