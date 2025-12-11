@@ -19,7 +19,7 @@ public class Especie {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private AnimalEspecie nome;
 }
