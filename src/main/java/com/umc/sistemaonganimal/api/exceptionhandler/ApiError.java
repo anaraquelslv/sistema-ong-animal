@@ -1,11 +1,12 @@
 package com.umc.sistemaonganimal.api.exceptionhandler;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
+@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ApiError {
     private LocalDateTime data;
