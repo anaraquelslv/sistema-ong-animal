@@ -7,6 +7,7 @@ import lombok.*;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -25,7 +26,7 @@ public class Animal {
     private Long id;
 
     @ToString.Include
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String nome;
 
 //    TODO adicionar verificação se a idade é maior ou igual a 0
@@ -43,22 +44,35 @@ public class Animal {
     private AnimalSexo sexo;
 
     @ToString.Include
-    @Column(nullable = false)
     private boolean castrado;
 
+//    TODO adicionar validação para que a data de resgate seja anterior a data atual
     @Column(name = "dt_resgate", nullable = false)
     private LocalDate dataResgate;
 
-//  TODO adicionar restrição para que a data de saida nunca seja antes que a data de resgate
+//  TODO adicionar restrição para que a data de saida nunca seja anterior a data de resgate
     @Column(name = "dt_saida")
     private LocalDate dataSaida;
 
-    @Column(name = "cor_olhos")
+    @Column(name = "cor_olhos", length = 20)
     private String corOlhos;
 
-    @Column(name = "cor_pelagem")
+    @Column(name = "cor_pelagem", length = 20)
     private String corPelagem;
 
     private String observacao;
+
+    @ManyToOne
+    @JoinColumn(name = "raca_id", nullable = false)
+    private Raca raca;
+
+    @ManyToOne
+    @JoinColumn(name = "adotante_id")
+    private Adotante adotante;
+
+    @ManyToOne
+    @JoinColumn(name = "status_id", nullable = false)
+    private StatusAnimal statusAnimal;
+
 
 }
