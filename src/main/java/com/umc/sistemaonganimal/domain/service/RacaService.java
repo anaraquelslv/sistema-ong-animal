@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CadastroRacaService {
+public class RacaService {
 
     @Autowired
     RacaRepository racaRepository;
 
-    public List<Raca> listarTodos(){
+    public List<Raca> listar(){
         return racaRepository.findAll();
     }
 

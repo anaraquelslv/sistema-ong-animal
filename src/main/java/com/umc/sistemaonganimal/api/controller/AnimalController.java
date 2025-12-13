@@ -1,7 +1,7 @@
 package com.umc.sistemaonganimal.api.controller;
 
 import com.umc.sistemaonganimal.domain.model.Animal;
-import com.umc.sistemaonganimal.domain.service.CadastroAnimalService;
+import com.umc.sistemaonganimal.domain.service.AnimalService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +15,11 @@ import java.util.List;
 public class AnimalController {
 
     @Autowired
-    private CadastroAnimalService animalService;
+    private AnimalService animalService;
 
     @GetMapping
     public List<Animal> listar() {
-        return animalService.listarTodos();
+        return animalService.listar();
     }
 
     @GetMapping("/{animalId}")

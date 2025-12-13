@@ -2,7 +2,6 @@ package com.umc.sistemaonganimal.domain.service;
 
 import com.umc.sistemaonganimal.domain.exception.AnimalNotFoundException;
 import com.umc.sistemaonganimal.domain.exception.EntityInUseException;
-import com.umc.sistemaonganimal.domain.exception.EntityNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +11,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CadastroAnimalService {
+public class AnimalService {
 
     @Autowired
     private AnimalRepository animalRepository;
 
-    public List<Animal> listarTodos(){
+    public List<Animal> listar(){
         return animalRepository.findAll();
     }
 
