@@ -2,6 +2,7 @@ package com.umc.sistemaonganimal.domain.model;
 
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalPorte;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalSexo;
+import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -44,6 +45,11 @@ public class Animal {
     private AnimalSexo sexo;
 
     @ToString.Include
+    @Column(nullable = false)
+    @Enumerated
+    private AnimalStatus status;
+
+    @ToString.Include
     private boolean castrado;
 
 //    TODO adicionar validação para que a data de resgate seja anterior a data atual
@@ -69,10 +75,4 @@ public class Animal {
     @ManyToOne
     @JoinColumn(name = "adotante_id")
     private Adotante adotante;
-
-    @ManyToOne
-    @JoinColumn(name = "status_id", nullable = false)
-    private StatusAnimal statusAnimal;
-
-
 }
