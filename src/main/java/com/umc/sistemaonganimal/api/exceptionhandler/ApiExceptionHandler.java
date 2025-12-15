@@ -1,6 +1,7 @@
 package com.umc.sistemaonganimal.api.exceptionhandler;
 
 import com.sun.net.httpserver.HttpsServer;
+import com.umc.sistemaonganimal.domain.exception.EntityInUseException;
 import com.umc.sistemaonganimal.domain.exception.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -23,14 +24,16 @@ public class ApiExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<?> handleDataIntegrityViolationException(){
+    @ExceptionHandler(EntityInUseException.class)
+    public ResponseEntity<?>  handleEntityInUseException(EntityInUseException e){
         ApiError apiError = ApiError.builder()
                 .data(LocalDateTime.now())
-                .mensagem("Requisição inválida: verifique se todos os campos obrigatórios foram preenchidos corretamente.")
+                .mensagem(e.getMessage())
                 .build();
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(apiError);
     }
+
+
 }
 

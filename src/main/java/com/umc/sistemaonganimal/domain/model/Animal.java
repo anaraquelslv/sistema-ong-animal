@@ -46,7 +46,7 @@ public class Animal {
 
     @ToString.Include
     @Column(nullable = false)
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private AnimalStatus status;
 
     @ToString.Include
