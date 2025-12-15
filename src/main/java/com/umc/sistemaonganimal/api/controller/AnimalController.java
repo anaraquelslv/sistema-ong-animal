@@ -34,14 +34,12 @@ public class AnimalController {
     }
 
     @PutMapping("/{animalId}")
-    public ResponseEntity<Animal> atualizar(@PathVariable Long animalId, @RequestBody Animal animal) {
+    public Animal atualizar(@PathVariable Long animalId, @RequestBody Animal animal) {
         Animal animalAtualizar = animalService.buscarPorId(animalId);
 
-        BeanUtils.copyProperties(animal, animalAtualizar, "id");
+        BeanUtils.copyProperties(animal, animalAtualizar, "id", "raca", "adotante");
 
-        animalAtualizar = animalService.salvar(animalAtualizar);
-
-        return ResponseEntity.ok(animalAtualizar);
+        return animalService.salvar(animalAtualizar);
     }
 
 //    TODO implementar exclusão lógica dos registros
