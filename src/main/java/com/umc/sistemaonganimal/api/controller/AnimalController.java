@@ -48,8 +48,7 @@ public class AnimalController {
 
     @DeleteMapping("/{animalId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> excluir(@PathVariable Long animalId) {
+    public void excluir(@PathVariable Long animalId) {
         animalService.excluir(animalId);
-        return ResponseEntity.noContent().build();
     }
 }

@@ -4,6 +4,8 @@ import com.umc.sistemaonganimal.domain.model.Raca;
 import com.umc.sistemaonganimal.domain.service.RacaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,16 +18,17 @@ public class RacaController {
     RacaService racaService;
 
     @GetMapping()
-    private List<Raca> listarTodos(){
+    private List<Raca> listarTodos() {
         return racaService.listar();
     }
 
     @GetMapping("/{racaId}")
-    private Raca buscarPorId(@PathVariable Long racaId){
+    private Raca buscarPorId(@PathVariable Long racaId) {
         return racaService.buscarPorId(racaId);
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     private Raca adicionar(@RequestBody Raca raca) {
         return racaService.salvar(raca);
     }
@@ -40,5 +43,9 @@ public class RacaController {
         return racaService.salvar(racaAtualizar);
     }
 
-
+    @DeleteMapping("/{racaId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    private void excluir(@PathVariable Long racaId){
+        racaService.excluir(racaId);
+    }
 }
