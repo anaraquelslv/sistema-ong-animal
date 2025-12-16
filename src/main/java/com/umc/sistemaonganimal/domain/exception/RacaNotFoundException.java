@@ -6,6 +6,6 @@ public class RacaNotFoundException extends EntityNotFoundException {
     }
 
     public RacaNotFoundException(Long id) {
-        this(String.format(String.format("Não existe de uma raça com o id: %d", id)));
+        this(String.format(String.format("Não existe um registro de uma raça com o id: %d", id)));
     }
 }

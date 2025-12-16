@@ -2,6 +2,7 @@ package com.umc.sistemaonganimal.domain.service;
 
 import com.umc.sistemaonganimal.domain.exception.EntityInUseException;
 import com.umc.sistemaonganimal.domain.exception.EspecieNotFoundException;
+import com.umc.sistemaonganimal.domain.exception.RacaInUseException;
 import com.umc.sistemaonganimal.domain.exception.RacaNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Especie;
 import com.umc.sistemaonganimal.domain.model.Raca;
@@ -45,7 +46,7 @@ public class RacaService {
             Raca raca = buscarPorId(id);
             racaRepository.delete(raca);
         } catch (DataIntegrityViolationException e) {
-            throw new EntityInUseException(String.format("A raça de id %d não pode ser excluida pois está em uso", id));
+            throw new RacaInUseException(id);
         }
 
     }
