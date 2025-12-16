@@ -1,5 +1,6 @@
 package com.umc.sistemaonganimal.domain.service;
 
+import com.umc.sistemaonganimal.domain.exception.AdotanteInUseException;
 import com.umc.sistemaonganimal.domain.exception.AdotanteNotFoundException;
 import com.umc.sistemaonganimal.domain.exception.EntityInUseException;
 import com.umc.sistemaonganimal.domain.model.Adotante;
@@ -33,7 +34,7 @@ public class AdotanteService {
             Adotante adotante = buscarPorId(id);
             adotanteRepository.delete(adotante);
         } catch (DataIntegrityViolationException e) {
-            throw new EntityInUseException(String.format("O registro do adotante com id %d não pode ser excluido pois está em uso", id));
+            throw new AdotanteInUseException(id);
         }
 
     }

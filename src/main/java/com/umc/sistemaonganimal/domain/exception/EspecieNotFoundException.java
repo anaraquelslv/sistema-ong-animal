@@ -6,6 +6,6 @@ public class EspecieNotFoundException extends EntityNotFoundException {
     }
 
     public EspecieNotFoundException(Long id) {
-        this(String.format(String.format("Não existe um registro de Especie com o id: %d", id)));
+        this(String.format(String.format("Não existe um registro de Espécie com o id: %d", id)));
     }
 }

@@ -3,8 +3,7 @@ package com.umc.sistemaonganimal.domain.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.CONFLICT)
-public class EntityInUseException extends RuntimeException {
+public abstract class EntityInUseException extends DomainException {
     public EntityInUseException(String message) {
         super(message);
     }

@@ -1,5 +1,8 @@
 package com.umc.sistemaonganimal.api.controller;
 
+import com.umc.sistemaonganimal.domain.exception.AdotanteNotFoundException;
+import com.umc.sistemaonganimal.domain.exception.DomainException;
+import com.umc.sistemaonganimal.domain.exception.RacaNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.service.AnimalService;
 import org.springframework.beans.BeanUtils;
@@ -30,16 +33,28 @@ public class AnimalController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Animal adicionar(@RequestBody Animal animal) {
-        return animalService.salvar(animal);
+        try {
+            return animalService.salvar(animal);
+        } catch (AdotanteNotFoundException | RacaNotFoundException ex) {
+            throw new DomainException(ex.getMessage(), ex);
+        }
+
     }
 
     @PutMapping("/{animalId}")
     public Animal atualizar(@PathVariable Long animalId, @RequestBody Animal animal) {
-        Animal animalAtualizar = animalService.buscarPorId(animalId);
+        try {
+            Animal animalAtualizar = animalService.buscarPorId(animalId);
 
-        BeanUtils.copyProperties(animal, animalAtualizar, "id", "raca", "adotante");
+            BeanUtils.copyProperties(animal, animalAtualizar, "id", "raca", "adotante");
 
-        return animalService.salvar(animalAtualizar);
+            return animalService.salvar(animalAtualizar);
+//            No momento as as chaves entrangeiras estão sendo ignoradas, o que impossibilita gerar notfound, já que esse valor não é passado no
+//            corpo da requisição no momento de atualizar, mas já deixei a estrutura pronta
+        } catch (AdotanteNotFoundException | RacaNotFoundException ex) {
+            throw new DomainException(ex.getMessage(), ex);
+        }
+
     }
 
 //    TODO implementar exclusão lógica dos registros
