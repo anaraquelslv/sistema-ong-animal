@@ -2,6 +2,7 @@ package com.umc.sistemaonganimal.domain.model.embeddables;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -17,27 +18,27 @@ import java.time.LocalDate;
 @Embeddable
 public class Endereco {
 
-    @NotNull
+    @NotBlank(message = "O logradouro é obrigatório")
     @Column(nullable = false, length = 100)
     private String logradouro;
 
-    @NotNull
+    @NotBlank(message = "O bairro é obrigatório")
     @Column(nullable = false, length = 50)
     private String bairro;
 
-    @NotNull
+    @NotBlank(message = "A cidade é obrigatória")
     @Column(nullable = false, length = 50)
     private String cidade;
 
-    @NotNull
+    @NotBlank(message = "O estado é obrigatório")
     @Column(nullable = false, length = 2)
     private String estado;
 
-    @NotNull
+    @NotBlank(message = "O CEP é obrigatório")
     @Column(nullable = false, length = 8)
     private String cep;
 
-    @NotNull
+    @NotBlank(message = "O número é obrigatório")
     @Column(name = "num_endereco", nullable = false, length = 10)
     private String numero;
 
