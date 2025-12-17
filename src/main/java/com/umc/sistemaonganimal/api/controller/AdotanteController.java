@@ -2,6 +2,7 @@ package com.umc.sistemaonganimal.api.controller;
 
 import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.service.AdotanteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class AdotanteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Adotante adicionar(@RequestBody Adotante adotante) {
+    public Adotante adicionar(@RequestBody @Valid Adotante adotante) {
         return adotanteService.salvar(adotante);
     }
 

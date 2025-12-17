@@ -2,6 +2,7 @@ package com.umc.sistemaonganimal.domain.model.embeddables;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter @Setter
@@ -14,9 +15,11 @@ import lombok.*;
 @Embeddable
 public class Contato {
 
+    @NotNull
     @Column(name = "telefone1", length = 15, nullable = false)
     private String telefonePrincipal;
 
+    @NotNull
     @Column(name = "telefone2", length = 15, nullable = false)
     private String telefoneSecundario;
 
