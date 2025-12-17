@@ -4,6 +4,7 @@ import com.umc.sistemaonganimal.domain.exception.DomainException;
 import com.umc.sistemaonganimal.domain.exception.EspecieNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Raca;
 import com.umc.sistemaonganimal.domain.service.RacaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,13 +32,13 @@ public class RacaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private Raca adicionar(@RequestBody Raca raca) {
+    private Raca adicionar(@RequestBody @Valid Raca raca) {
         return racaService.salvar(raca);
     }
 
 
     @PutMapping("/{racaId}")
-    private Raca atualizar(@PathVariable Long racaId, @RequestBody Raca raca) {
+    private Raca atualizar(@PathVariable Long racaId, @RequestBody @Valid Raca raca) {
 
         try {
             Raca racaAtualizar = racaService.buscarPorId(racaId);

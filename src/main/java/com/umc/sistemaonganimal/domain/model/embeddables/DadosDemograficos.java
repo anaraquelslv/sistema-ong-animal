@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 @Setter @Getter
@@ -21,6 +22,7 @@ public class DadosDemograficos {
     @Column(length = 50)
     private String profissao;
 
+    @PositiveOrZero(message = "O valor da renda mensal deve ser positvo e maior que zero")
     @Column(name = "renda_mensal")
     private double rendaMensal;
 

@@ -1,6 +1,7 @@
 package com.umc.sistemaonganimal.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 
@@ -19,9 +20,11 @@ public class Raca {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(nullable = false, length = 50)
     private String nome;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "especie_id", nullable = false)
     private Especie especie;

@@ -5,6 +5,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Getter @Setter
 @ToString
@@ -17,6 +18,7 @@ import lombok.*;
 public class Documento {
 
     @NotBlank(message = "O CPF é obrigatório")
+    @CPF(message = "Adicione um número válido de CPF")
     @Column(nullable = false, length = 11)
     private String cpf;
 

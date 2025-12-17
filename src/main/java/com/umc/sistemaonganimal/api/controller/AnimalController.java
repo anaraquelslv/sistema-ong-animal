@@ -5,6 +5,7 @@ import com.umc.sistemaonganimal.domain.exception.DomainException;
 import com.umc.sistemaonganimal.domain.exception.RacaNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.service.AnimalService;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class AnimalController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Animal adicionar(@RequestBody Animal animal) {
+    public Animal adicionar(@RequestBody @Valid Animal animal) {
         try {
             return animalService.salvar(animal);
         } catch (AdotanteNotFoundException | RacaNotFoundException ex) {
@@ -49,7 +50,7 @@ public class AnimalController {
             BeanUtils.copyProperties(animal, animalAtualizar, "id", "raca", "adotante");
 
             return animalService.salvar(animalAtualizar);
-//            No momento as as chaves entrangeiras estão sendo ignoradas, o que impossibilita gerar notfound, já que esse valor não é passado no
+//            No momento as chaves entrangeiras estão sendo ignoradas, o que impossibilita gerar notfound, já que esse valor não é passado no
 //            corpo da requisição no momento de atualizar, mas já deixei a estrutura pronta
         } catch (AdotanteNotFoundException | RacaNotFoundException ex) {
             throw new DomainException(ex.getMessage(), ex);

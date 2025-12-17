@@ -2,6 +2,7 @@ package com.umc.sistemaonganimal.domain.model.embeddables;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -26,6 +27,7 @@ public class Contato {
 
 //   TODO Adicionar validação Unique e verificar resposta da exceção
     @Column(length = 100, unique = true)
+    @Email
     private String email;
 
     @Column(length = 50)
