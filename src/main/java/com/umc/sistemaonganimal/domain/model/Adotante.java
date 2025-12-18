@@ -1,5 +1,6 @@
 package com.umc.sistemaonganimal.domain.model;
 
+import com.umc.sistemaonganimal.core.validation.Groups;
 import com.umc.sistemaonganimal.domain.model.embeddables.Contato;
 import com.umc.sistemaonganimal.domain.model.embeddables.DadosDemograficos;
 import com.umc.sistemaonganimal.domain.model.embeddables.Documento;
@@ -26,6 +27,7 @@ public class Adotante {
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(groups = Groups.AdotanteId.class)
     private Long id;
 
     @NotBlank(message = "O nome do adotante é obrigatório")
@@ -34,7 +36,6 @@ public class Adotante {
 
 //    TODO adicionar validação de idade
     @NotNull(message = "A data de nascimento é obrigatória")
-
     @Column(name = "data_nasc", nullable = false)
     private LocalDate dataNascimento;
 

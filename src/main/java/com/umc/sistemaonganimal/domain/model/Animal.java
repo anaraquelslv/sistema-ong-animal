@@ -1,13 +1,17 @@
 package com.umc.sistemaonganimal.domain.model;
 
+import com.umc.sistemaonganimal.core.validation.Groups;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalPorte;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalSexo;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalStatus;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.groups.ConvertGroup;
+import jakarta.validation.groups.Default;
 import lombok.*;
 
 
@@ -77,11 +81,15 @@ public class Animal {
     private String observacao;
 
     @NotNull
+    @Valid
+    @ConvertGroup(from = Default.class, to = Groups.RacaId.class)
     @ManyToOne
     @JoinColumn(name = "raca_id", nullable = false)
     private Raca raca;
 
     @ManyToOne
+    @Valid
+    @ConvertGroup(from = Default.class, to = Groups.AdotanteId.class)
     @JoinColumn(name = "adotante_id")
     private Adotante adotante;
 }

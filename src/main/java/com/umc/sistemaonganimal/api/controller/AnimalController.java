@@ -43,15 +43,14 @@ public class AnimalController {
     }
 
     @PutMapping("/{animalId}")
-    public Animal atualizar(@PathVariable Long animalId, @RequestBody Animal animal) {
+    public Animal atualizar(@PathVariable Long animalId, @RequestBody @Valid Animal animal) {
         try {
             Animal animalAtualizar = animalService.buscarPorId(animalId);
 
-            BeanUtils.copyProperties(animal, animalAtualizar, "id", "raca", "adotante");
+            BeanUtils.copyProperties(animal, animalAtualizar, "id");
 
             return animalService.salvar(animalAtualizar);
-//            No momento as chaves entrangeiras estão sendo ignoradas, o que impossibilita gerar notfound, já que esse valor não é passado no
-//            corpo da requisição no momento de atualizar, mas já deixei a estrutura pronta
+
         } catch (AdotanteNotFoundException | RacaNotFoundException ex) {
             throw new DomainException(ex.getMessage(), ex);
         }
