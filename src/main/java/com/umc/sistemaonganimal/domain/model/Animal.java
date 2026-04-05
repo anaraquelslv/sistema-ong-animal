@@ -34,7 +34,7 @@ public class Animal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O nome é obrigatório")
+    @NotBlank
     @ToString.Include
     @Column(nullable = false, length = 50)
     private String nome;
