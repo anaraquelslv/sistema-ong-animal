@@ -1,7 +1,11 @@
 package com.umc.sistemaonganimal.api.controller;
 
+import com.umc.sistemaonganimal.domain.exception.AdotanteNotFoundException;
+import com.umc.sistemaonganimal.domain.exception.DomainException;
+import com.umc.sistemaonganimal.domain.exception.RacaNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Animal;
-import com.umc.sistemaonganimal.domain.service.CadastroAnimalService;
+import com.umc.sistemaonganimal.domain.service.AnimalService;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +19,11 @@ import java.util.List;
 public class AnimalController {
 
     @Autowired
-    private CadastroAnimalService animalService;
+    private AnimalService animalService;
 
     @GetMapping
     public List<Animal> listar() {
-        return animalService.listarTodos();
+        return animalService.listar();
     }
 
     @GetMapping("/{animalId}")
@@ -29,27 +33,35 @@ public class AnimalController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Animal adicionar(@RequestBody Animal animal) {
-        return animalService.salvar(animal);
+    public Animal adicionar(@RequestBody @Valid Animal animal) {
+        try {
+            return animalService.salvar(animal);
+        } catch (AdotanteNotFoundException | RacaNotFoundException ex) {
+            throw new DomainException(ex.getMessage(), ex);
+        }
+
     }
 
     @PutMapping("/{animalId}")
-    public ResponseEntity<Animal> atualizar(@PathVariable Long animalId, @RequestBody Animal animal) {
-        Animal animalAtualizar = animalService.buscarPorId(animalId);
+    public Animal atualizar(@PathVariable Long animalId, @RequestBody @Valid Animal animal) {
+        try {
+            Animal animalAtualizar = animalService.buscarPorId(animalId);
 
-        BeanUtils.copyProperties(animal, animalAtualizar, "id");
+            BeanUtils.copyProperties(animal, animalAtualizar, "id");
 
-        animalAtualizar = animalService.salvar(animalAtualizar);
+            return animalService.salvar(animalAtualizar);
 
-        return ResponseEntity.ok(animalAtualizar);
+        } catch (AdotanteNotFoundException | RacaNotFoundException ex) {
+            throw new DomainException(ex.getMessage(), ex);
+        }
+
     }
 
 //    TODO implementar exclusão lógica dos registros
 
     @DeleteMapping("/{animalId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> excluir(@PathVariable Long animalId) {
+    public void excluir(@PathVariable Long animalId) {
         animalService.excluir(animalId);
-        return ResponseEntity.noContent().build();
     }
 }

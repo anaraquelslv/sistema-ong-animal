@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS animal (
     idade INT CHECK (idade >= 0),
     sexo VARCHAR(10) NOT NULL CHECK (sexo IN ('MACHO', 'FEMEA')),
     porte VARCHAR(10) NOT NULL CHECK (porte IN ('PEQUENO', 'MEDIO', 'GRANDE')),
+    status VARCHAR(20) NOT NULL CHECK (status IN ('DISPONIVEL', 'ADOTADO', 'EM_TRATAMENTO', 'QUARENTENA', 'OBITO')),
     castrado BOOLEAN DEFAULT FALSE,
     dt_resgate DATE NOT NULL CHECK (dt_resgate <= CURRENT_DATE),
     dt_saida DATE,

@@ -1,6 +1,6 @@
 package com.umc.sistemaonganimal.domain.exception;
 
-public abstract class AnimalNotFoundException extends EntityNotFoundException {
+public class AnimalNotFoundException extends EntityNotFoundException {
     public AnimalNotFoundException(String message) {
         super(message);
     }
