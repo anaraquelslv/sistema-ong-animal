@@ -30,12 +30,12 @@ public class Adotante {
     @NotNull(groups = Groups.AdotanteId.class)
     private Long id;
 
-    @NotBlank(message = "O nome do adotante é obrigatório")
+    @NotBlank
     @Column(nullable = false, length = 100)
     private String nome;
 
 //    TODO adicionar validação de idade
-    @NotNull(message = "A data de nascimento é obrigatória")
+    @NotNull
     @Column(name = "data_nasc", nullable = false)
     private LocalDate dataNascimento;
 

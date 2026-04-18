@@ -38,23 +38,23 @@ public class Animal {
     @Column(nullable = false, length = 50)
     private String nome;
 
-    @PositiveOrZero(message = "A idade deve ser maior ou igual zero")
+    @PositiveOrZero
     @ToString.Include
     private int idade;
 
-    @NotNull(message = "O porte é obrigatório")
+    @NotNull
     @ToString.Include
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private AnimalPorte porte;
 
-    @NotNull(message = "O sexo é obrigatório")
+    @NotNull
     @ToString.Include
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private AnimalSexo sexo;
 
-    @NotNull(message = "O status é obrigatório")
+    @NotNull
     @ToString.Include
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -63,7 +63,7 @@ public class Animal {
     @ToString.Include
     private boolean castrado;
 
-    @PastOrPresent(message = "A data de resgate deve ser anterior a data atual")
+    @PastOrPresent
     @Column(name = "dt_resgate", nullable = false)
     private LocalDate dataResgate;
 

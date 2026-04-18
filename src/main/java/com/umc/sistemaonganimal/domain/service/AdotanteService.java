@@ -6,6 +6,7 @@ import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.repository.AdotanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,20 +15,22 @@ import java.util.List;
 public class AdotanteService {
 
     @Autowired
-    AdotanteRepository adotanteRepository;
+    private AdotanteRepository adotanteRepository;
 
     public List<Adotante> listar() {
         return adotanteRepository.findAll();
     }
 
+    @SuppressWarnings("null")
     public Adotante buscarPorId(Long id) {
         return adotanteRepository.findById(id).orElseThrow(() -> new AdotanteNotFoundException(id));
     }
 
-    public Adotante salvar(Adotante adotante) {
+    public Adotante salvar(@NonNull Adotante adotante) {
         return adotanteRepository.save(adotante);
     }
 
+    @SuppressWarnings("null")
     public void excluir(Long id) {
         try {
             Adotante adotante = buscarPorId(id);

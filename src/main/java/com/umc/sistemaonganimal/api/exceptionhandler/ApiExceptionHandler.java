@@ -17,6 +17,14 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(Exception.class)
+    public ProblemDetail handleUncaughtException(Exception ex) {
+        return createProblemDetail(HttpStatus.INTERNAL_SERVER_ERROR, 
+                "Ocorreu um erro interno inesperado no sistema. Tente novamente e se o problema persistir, entre em contato com o administrador do sistema.", 
+                "Erro interno do sistema",
+                "https://pivic-ong/erro-interno");
+    }
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ProblemDetail handleEntityNotFoundException(EntityNotFoundException ex) {
         return createProblemDetail(HttpStatus.NOT_FOUND, ex.getMessage(), "Entidade não encontrada",

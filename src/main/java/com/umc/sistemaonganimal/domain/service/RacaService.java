@@ -15,15 +15,16 @@ import java.util.List;
 public class RacaService {
 
     @Autowired
-    RacaRepository racaRepository;
+    private RacaRepository racaRepository;
 
     @Autowired
-    EspecieService especieService;
+    private EspecieService especieService;
 
     public List<Raca> listar() {
         return racaRepository.findAll();
     }
 
+    @SuppressWarnings("null")
     public Raca buscarPorId(Long id) {
         return racaRepository.findById(id).orElseThrow(() -> new RacaNotFoundException(id));
     }
@@ -38,6 +39,7 @@ public class RacaService {
         return racaRepository.save(raca);
     }
 
+    @SuppressWarnings("null")
     public void excluir(Long id) {
         try {
             Raca raca = buscarPorId(id);

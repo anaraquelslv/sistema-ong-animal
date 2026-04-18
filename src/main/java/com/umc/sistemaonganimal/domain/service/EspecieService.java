@@ -10,14 +10,16 @@ import java.util.List;
 
 @Service
 public class EspecieService {
-    @Autowired
-    EspecieRepository especieRepository;
 
-    public List<Especie> listar(){
+    @Autowired
+    private EspecieRepository especieRepository;
+
+    public List<Especie> listar() {
         return especieRepository.findAll();
     }
 
-    public Especie buscarPorId(Long id){
+    @SuppressWarnings("null")
+    public Especie buscarPorId(Long id) {
         return especieRepository.findById(id).orElseThrow(() -> new EspecieNotFoundException(id));
     }
 }

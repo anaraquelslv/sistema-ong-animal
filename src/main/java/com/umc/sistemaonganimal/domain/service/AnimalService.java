@@ -29,6 +29,7 @@ public class AnimalService {
         return animalRepository.findAll();
     }
 
+    @SuppressWarnings("null")
     public Animal buscarPorId(Long id) {
         return animalRepository.findById(id)
                 .orElseThrow(() -> new AnimalNotFoundException(id) {
@@ -50,6 +51,7 @@ public class AnimalService {
         return animalRepository.save(animal);
     }
 
+    @SuppressWarnings("null")
     public void excluir(Long id) {
         try {
             Animal animalExcluir = buscarPorId(id);
