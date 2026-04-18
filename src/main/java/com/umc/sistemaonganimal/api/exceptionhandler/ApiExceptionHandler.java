@@ -43,6 +43,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 "https://pivic-ong/erro-domain");
     }
 
+    @SuppressWarnings("null")
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
             HttpHeaders headers, HttpStatusCode status, WebRequest request) {
@@ -61,6 +62,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, problemDetail, headers, status, request);
     }
 
+    @SuppressWarnings("null")
     private ProblemDetail createProblemDetail(HttpStatusCode status, String detail, String title, String type) {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(status, detail);
         problem.setTitle(title);
