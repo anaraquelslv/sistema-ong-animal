@@ -3,11 +3,11 @@ package com.umc.sistemaonganimal.domain.model.embeddables;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
-@Getter @Setter
+@Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 @AllArgsConstructor

@@ -8,13 +8,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping({"/racas"})
+@RequestMapping({ "/racas" })
 public class RacaController {
 
     @Autowired
@@ -36,7 +35,6 @@ public class RacaController {
         return racaService.salvar(raca);
     }
 
-
     @PutMapping("/{racaId}")
     private Raca atualizar(@PathVariable Long racaId, @RequestBody @Valid Raca raca) {
 
@@ -52,7 +50,7 @@ public class RacaController {
 
     @DeleteMapping("/{racaId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    private void excluir(@PathVariable Long racaId){
+    private void excluir(@PathVariable Long racaId) {
         racaService.excluir(racaId);
     }
 }

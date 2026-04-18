@@ -3,12 +3,10 @@ package com.umc.sistemaonganimal.domain.model.embeddables;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.time.LocalDate;
-
-@Getter @Setter
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

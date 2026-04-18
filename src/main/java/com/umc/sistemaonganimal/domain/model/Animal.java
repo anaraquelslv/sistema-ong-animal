@@ -14,11 +14,10 @@ import jakarta.validation.groups.ConvertGroup;
 import jakarta.validation.groups.Default;
 import lombok.*;
 
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-@Getter @Setter
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
@@ -68,7 +67,8 @@ public class Animal {
     @Column(name = "dt_resgate", nullable = false)
     private LocalDate dataResgate;
 
-//  TODO adicionar restrição para que a data de saida nunca seja anterior a data de resgate
+    // TODO adicionar restrição para que a data de saida nunca seja anterior a data
+    // de resgate
     @Column(name = "dt_saida")
     private LocalDate dataSaida;
 

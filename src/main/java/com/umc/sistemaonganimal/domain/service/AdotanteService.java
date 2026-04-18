@@ -2,7 +2,6 @@ package com.umc.sistemaonganimal.domain.service;
 
 import com.umc.sistemaonganimal.domain.exception.AdotanteInUseException;
 import com.umc.sistemaonganimal.domain.exception.AdotanteNotFoundException;
-import com.umc.sistemaonganimal.domain.exception.EntityInUseException;
 import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.repository.AdotanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class AdotanteService {
     @Autowired
     AdotanteRepository adotanteRepository;
 
-    public List<Adotante> listar(){
+    public List<Adotante> listar() {
         return adotanteRepository.findAll();
     }
 
@@ -25,7 +24,7 @@ public class AdotanteService {
         return adotanteRepository.findById(id).orElseThrow(() -> new AdotanteNotFoundException(id));
     }
 
-    public Adotante salvar(Adotante adotante){
+    public Adotante salvar(Adotante adotante) {
         return adotanteRepository.save(adotante);
     }
 
