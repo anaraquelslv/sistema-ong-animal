@@ -17,16 +17,16 @@ import org.hibernate.validator.constraints.br.CPF;
 @Embeddable
 public class Documento {
 
-    @NotBlank(message = "O CPF é obrigatório")
-    @CPF(message = "Adicione um número válido de CPF")
+    @NotBlank
+    @CPF
     @Column(nullable = false, length = 11)
     private String cpf;
 
-    @NotBlank(message = "O RG é obrigatório")
+    @NotBlank
     @Column(nullable = false, length = 20)
     private String rg;
 
-    @NotBlank(message = "O orgão emissor é obrigatório")
+    @NotBlank
     @Column(nullable = false, length = 10)
     private String orgaoRg;
 }

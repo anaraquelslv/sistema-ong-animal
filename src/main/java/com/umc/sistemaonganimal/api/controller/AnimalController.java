@@ -9,7 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,8 +42,9 @@ public class AnimalController {
 
     }
 
+    @SuppressWarnings("null")
     @PutMapping("/{animalId}")
-    public Animal atualizar(@PathVariable Long animalId, @RequestBody @Valid Animal animal) {
+    public Animal atualizar(@PathVariable Long animalId, @RequestBody @Valid @NonNull Animal animal) {
         try {
             Animal animalAtualizar = animalService.buscarPorId(animalId);
 

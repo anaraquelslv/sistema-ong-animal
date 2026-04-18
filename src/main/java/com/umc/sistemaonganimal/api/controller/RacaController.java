@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,8 +36,9 @@ public class RacaController {
         return racaService.salvar(raca);
     }
 
+    @SuppressWarnings("null")
     @PutMapping("/{racaId}")
-    private Raca atualizar(@PathVariable Long racaId, @RequestBody @Valid Raca raca) {
+    private Raca atualizar(@PathVariable Long racaId, @RequestBody @Valid @NonNull Raca raca) {
 
         try {
             Raca racaAtualizar = racaService.buscarPorId(racaId);

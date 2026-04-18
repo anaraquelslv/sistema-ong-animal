@@ -27,12 +27,14 @@ public class AdotanteController {
         return adotanteService.buscarPorId(adotanteId);
     }
 
+    @SuppressWarnings("null")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Adotante adicionar(@RequestBody @Valid Adotante adotante) {
         return adotanteService.salvar(adotante);
     }
 
+    @SuppressWarnings("null")
     @PutMapping("/{adotanteId}")
     public Adotante atualizar(@PathVariable Long adotanteId, @RequestBody Adotante adotante) {
         Adotante adotanteAtualizar = adotanteService.buscarPorId(adotanteId);

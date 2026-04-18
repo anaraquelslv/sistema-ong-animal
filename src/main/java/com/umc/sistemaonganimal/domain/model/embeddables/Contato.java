@@ -17,11 +17,11 @@ import lombok.*;
 @Embeddable
 public class Contato {
 
-    @NotBlank(message = "O telefone principal é obrigatório")
+    @NotBlank
     @Column(name = "telefone1", length = 15, nullable = false)
     private String telefonePrincipal;
 
-    @NotBlank(message = "O telefone secundário é obrigatório")
+    @NotBlank
     @Column(name = "telefone2", length = 15, nullable = false)
     private String telefoneSecundario;
 
