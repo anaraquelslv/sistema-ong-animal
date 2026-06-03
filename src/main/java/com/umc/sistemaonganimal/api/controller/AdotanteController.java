@@ -36,9 +36,9 @@ public class AdotanteController {
 
     @SuppressWarnings("null")
     @PutMapping("/{adotanteId}")
-    public Adotante atualizar(@PathVariable Long adotanteId, @RequestBody Adotante adotante) {
+    public Adotante atualizar(@PathVariable Long adotanteId, @RequestBody @Valid Adotante adotante) {
         Adotante adotanteAtualizar = adotanteService.buscarPorId(adotanteId);
-        BeanUtils.copyProperties(adotante, adotanteAtualizar, "id", "documento", "dadosDemograficos", "contato", "endereco");
+        BeanUtils.copyProperties(adotante, adotanteAtualizar, "id");
         return adotanteService.salvar(adotanteAtualizar);
     }
 

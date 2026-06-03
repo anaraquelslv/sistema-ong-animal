@@ -2,8 +2,8 @@ package com.umc.sistemaonganimal.domain.model.enums.general;
 
 public enum EstadoCivil {
     SOLTEIRO,
-    CADADO,
-    DIVORCIDADO,
+    CASADO,
+    DIVORCIADO,
     VIUVO,
     SEPARADO_JUDICIALMENTE
 }

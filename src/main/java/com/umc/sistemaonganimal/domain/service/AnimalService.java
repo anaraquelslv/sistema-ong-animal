@@ -2,6 +2,7 @@ package com.umc.sistemaonganimal.domain.service;
 
 import com.umc.sistemaonganimal.domain.exception.AnimalInUseException;
 import com.umc.sistemaonganimal.domain.exception.AnimalNotFoundException;
+import com.umc.sistemaonganimal.domain.exception.DomainException;
 import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.model.Raca;
@@ -43,9 +44,16 @@ public class AnimalService {
         animal.setRaca(raca);
 
         if (animal.getStatus().equals(AnimalStatus.ADOTADO)) {
+            if (animal.getAdotante() == null || animal.getAdotante().getId() == null) {
+                throw new DomainException(
+                        "É obrigatório informar o adotante quando o status do animal é ADOTADO.");
+            }
             Long adotanteId = animal.getAdotante().getId();
             Adotante adotante = adotanteService.buscarPorId(adotanteId);
             animal.setAdotante(adotante);
+        } else {
+            // Garante consistência: animal sem status ADOTADO não mantém adotante vinculado.
+            animal.setAdotante(null);
         }
 
         return animalRepository.save(animal);
