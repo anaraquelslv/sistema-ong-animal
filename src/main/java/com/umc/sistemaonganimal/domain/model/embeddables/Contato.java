@@ -2,8 +2,6 @@ package com.umc.sistemaonganimal.domain.model.embeddables;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter
@@ -17,17 +15,14 @@ import lombok.*;
 @Embeddable
 public class Contato {
 
-    @NotBlank
     @Column(name = "telefone1", length = 15, nullable = false)
     private String telefonePrincipal;
 
-    @NotBlank
     @Column(name = "telefone2", length = 15, nullable = false)
     private String telefoneSecundario;
 
     // TODO Adicionar validação Unique e verificar resposta da exceção
     @Column(length = 100, unique = true)
-    @Email
     private String email;
 
     @Column(length = 50)

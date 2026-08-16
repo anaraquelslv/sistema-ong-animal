@@ -2,7 +2,6 @@ package com.umc.sistemaonganimal.domain.model.embeddables;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter
@@ -16,27 +15,21 @@ import lombok.*;
 @Embeddable
 public class Endereco {
 
-    @NotBlank
     @Column(nullable = false, length = 100)
     private String logradouro;
 
-    @NotBlank
     @Column(nullable = false, length = 50)
     private String bairro;
 
-    @NotBlank
     @Column(nullable = false, length = 50)
     private String cidade;
 
-    @NotBlank
     @Column(nullable = false, length = 2)
     private String estado;
 
-    @NotBlank
     @Column(nullable = false, length = 8)
     private String cep;
 
-    @NotBlank
     @Column(name = "num_endereco", nullable = false, length = 10)
     private String numero;
 
