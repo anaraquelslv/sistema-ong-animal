@@ -1,14 +1,15 @@
 package com.umc.sistemaonganimal.api.controller;
 
+import com.umc.sistemaonganimal.api.dto.request.RacaRequestDTO;
+import com.umc.sistemaonganimal.api.dto.response.RacaResponseDTO;
 import com.umc.sistemaonganimal.domain.exception.DomainException;
 import com.umc.sistemaonganimal.domain.exception.EspecieNotFoundException;
+import com.umc.sistemaonganimal.domain.model.Especie;
 import com.umc.sistemaonganimal.domain.model.Raca;
 import com.umc.sistemaonganimal.domain.service.RacaService;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,29 +22,33 @@ public class RacaController {
     RacaService racaService;
 
     @GetMapping()
-    private List<Raca> listarTodos() {
-        return racaService.listar();
+    private List<RacaResponseDTO> listarTodos() {
+        return racaService.listar().stream()
+                .map(RacaResponseDTO::fromEntity)
+                .toList();
     }
 
     @GetMapping("/{racaId}")
-    private Raca buscarPorId(@PathVariable Long racaId) {
-        return racaService.buscarPorId(racaId);
+    private RacaResponseDTO buscarPorId(@PathVariable Long racaId) {
+        return RacaResponseDTO.fromEntity(racaService.buscarPorId(racaId));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private Raca adicionar(@RequestBody @Valid Raca raca) {
-        return racaService.salvar(raca);
+    private RacaResponseDTO adicionar(@RequestBody @Valid RacaRequestDTO racaDTO) {
+        Raca raca = racaService.salvar(racaDTO.toEntity());
+        return RacaResponseDTO.fromEntity(raca);
     }
 
-    @SuppressWarnings("null")
     @PutMapping("/{racaId}")
-    private Raca atualizar(@PathVariable Long racaId, @RequestBody @Valid @NonNull Raca raca) {
+    private RacaResponseDTO atualizar(@PathVariable Long racaId, @RequestBody @Valid RacaRequestDTO racaDTO) {
 
         try {
             Raca racaAtualizar = racaService.buscarPorId(racaId);
-            BeanUtils.copyProperties(raca, racaAtualizar, "id");
-            return racaService.salvar(racaAtualizar);
+            racaAtualizar.setNome(racaDTO.getNome());
+            racaAtualizar.setEspecie(Especie.builder().id(racaDTO.getEspecieId()).build());
+            Raca raca = racaService.salvar(racaAtualizar);
+            return RacaResponseDTO.fromEntity(raca);
         } catch (EspecieNotFoundException e) {
             throw new DomainException(e.getMessage(), e);
         }
