@@ -1,15 +1,17 @@
 package com.umc.sistemaonganimal.api.controller;
 
+import com.umc.sistemaonganimal.api.dto.request.AnimalRequestDTO;
+import com.umc.sistemaonganimal.api.dto.response.AnimalResponseDTO;
 import com.umc.sistemaonganimal.domain.exception.AdotanteNotFoundException;
 import com.umc.sistemaonganimal.domain.exception.DomainException;
 import com.umc.sistemaonganimal.domain.exception.RacaNotFoundException;
+import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.model.Animal;
+import com.umc.sistemaonganimal.domain.model.Raca;
 import com.umc.sistemaonganimal.domain.service.AnimalService;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,35 +24,52 @@ public class AnimalController {
     private AnimalService animalService;
 
     @GetMapping
-    public List<Animal> listar() {
-        return animalService.listar();
+    public List<AnimalResponseDTO> listar() {
+        return animalService.listar().stream()
+                .map(AnimalResponseDTO::fromEntity)
+                .toList();
     }
 
     @GetMapping("/{animalId}")
-    public Animal buscarPorId(@PathVariable("animalId") Long id) {
-        return animalService.buscarPorId(id);
+    public AnimalResponseDTO buscarPorId(@PathVariable("animalId") Long id) {
+        return AnimalResponseDTO.fromEntity(animalService.buscarPorId(id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Animal adicionar(@RequestBody @Valid Animal animal) {
+    public AnimalResponseDTO adicionar(@RequestBody @Valid AnimalRequestDTO animalDTO) {
         try {
-            return animalService.salvar(animal);
+            Animal animal = animalService.salvar(animalDTO.toEntity());
+            return AnimalResponseDTO.fromEntity(animal);
         } catch (AdotanteNotFoundException | RacaNotFoundException ex) {
             throw new DomainException(ex.getMessage(), ex);
         }
 
     }
 
-    @SuppressWarnings("null")
     @PutMapping("/{animalId}")
-    public Animal atualizar(@PathVariable Long animalId, @RequestBody @Valid @NonNull Animal animal) {
+    public AnimalResponseDTO atualizar(@PathVariable Long animalId, @RequestBody @Valid AnimalRequestDTO animalDTO) {
         try {
             Animal animalAtualizar = animalService.buscarPorId(animalId);
 
-            BeanUtils.copyProperties(animal, animalAtualizar, "id");
+            animalAtualizar.setNome(animalDTO.getNome());
+            animalAtualizar.setIdade(animalDTO.getIdade());
+            animalAtualizar.setPorte(animalDTO.getPorte());
+            animalAtualizar.setSexo(animalDTO.getSexo());
+            animalAtualizar.setStatus(animalDTO.getStatus());
+            animalAtualizar.setCastrado(animalDTO.isCastrado());
+            animalAtualizar.setDataResgate(animalDTO.getDataResgate());
+            animalAtualizar.setDataSaida(animalDTO.getDataSaida());
+            animalAtualizar.setCorOlhos(animalDTO.getCorOlhos());
+            animalAtualizar.setCorPelagem(animalDTO.getCorPelagem());
+            animalAtualizar.setObservacao(animalDTO.getObservacao());
+            animalAtualizar.setRaca(Raca.builder().id(animalDTO.getRacaId()).build());
+            animalAtualizar.setAdotante(animalDTO.getAdotanteId() != null
+                    ? Adotante.builder().id(animalDTO.getAdotanteId()).build()
+                    : null);
 
-            return animalService.salvar(animalAtualizar);
+            Animal animal = animalService.salvar(animalAtualizar);
+            return AnimalResponseDTO.fromEntity(animal);
 
         } catch (AdotanteNotFoundException | RacaNotFoundException ex) {
             throw new DomainException(ex.getMessage(), ex);
