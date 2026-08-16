@@ -1,6 +1,6 @@
 package com.umc.sistemaonganimal.api.controller;
 
-import com.umc.sistemaonganimal.domain.model.Especie;
+import com.umc.sistemaonganimal.api.dto.response.EspecieResponseDTO;
 import com.umc.sistemaonganimal.domain.service.EspecieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +15,14 @@ public class EspecieController {
     EspecieService especieService;
 
     @GetMapping
-    public List<Especie> listar(){
-        return especieService.listar();
+    public List<EspecieResponseDTO> listar(){
+        return especieService.listar().stream()
+                .map(EspecieResponseDTO::fromEntity)
+                .toList();
     }
 
     @GetMapping("/{especieId}")
-    public Especie buscarPorId(@PathVariable Long especieId) {
-        return especieService.buscarPorId(especieId);
+    public EspecieResponseDTO buscarPorId(@PathVariable Long especieId) {
+        return EspecieResponseDTO.fromEntity(especieService.buscarPorId(especieId));
     }
 }
