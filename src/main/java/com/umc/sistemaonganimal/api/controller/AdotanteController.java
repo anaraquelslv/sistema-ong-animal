@@ -1,9 +1,10 @@
 package com.umc.sistemaonganimal.api.controller;
 
+import com.umc.sistemaonganimal.api.dto.request.AdotanteRequestDTO;
+import com.umc.sistemaonganimal.api.dto.response.AdotanteResponseDTO;
 import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.service.AdotanteService;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,28 +19,35 @@ public class AdotanteController {
     AdotanteService adotanteService;
 
     @GetMapping()
-    public List<Adotante> listar(){
-        return adotanteService.listar();
+    public List<AdotanteResponseDTO> listar(){
+        return adotanteService.listar().stream()
+                .map(AdotanteResponseDTO::fromEntity)
+                .toList();
     }
 
     @GetMapping("/{adotanteId}")
-    public Adotante buscar(@PathVariable Long adotanteId){
-        return adotanteService.buscarPorId(adotanteId);
+    public AdotanteResponseDTO buscar(@PathVariable Long adotanteId){
+        return AdotanteResponseDTO.fromEntity(adotanteService.buscarPorId(adotanteId));
     }
 
-    @SuppressWarnings("null")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Adotante adicionar(@RequestBody @Valid Adotante adotante) {
-        return adotanteService.salvar(adotante);
+    public AdotanteResponseDTO adicionar(@RequestBody @Valid AdotanteRequestDTO adotanteDTO) {
+        Adotante adotante = adotanteService.salvar(adotanteDTO.toEntity());
+        return AdotanteResponseDTO.fromEntity(adotante);
     }
 
-    @SuppressWarnings("null")
     @PutMapping("/{adotanteId}")
-    public Adotante atualizar(@PathVariable Long adotanteId, @RequestBody @Valid Adotante adotante) {
+    public AdotanteResponseDTO atualizar(@PathVariable Long adotanteId, @RequestBody @Valid AdotanteRequestDTO adotanteDTO) {
         Adotante adotanteAtualizar = adotanteService.buscarPorId(adotanteId);
-        BeanUtils.copyProperties(adotante, adotanteAtualizar, "id");
-        return adotanteService.salvar(adotanteAtualizar);
+        adotanteAtualizar.setNome(adotanteDTO.getNome());
+        adotanteAtualizar.setDataNascimento(adotanteDTO.getDataNascimento());
+        adotanteAtualizar.setDocumento(adotanteDTO.getDocumento() != null ? adotanteDTO.getDocumento().toEntity() : null);
+        adotanteAtualizar.setDadosDemograficos(adotanteDTO.getDadosDemograficos() != null ? adotanteDTO.getDadosDemograficos().toEntity() : null);
+        adotanteAtualizar.setContato(adotanteDTO.getContato() != null ? adotanteDTO.getContato().toEntity() : null);
+        adotanteAtualizar.setEndereco(adotanteDTO.getEndereco() != null ? adotanteDTO.getEndereco().toEntity() : null);
+        Adotante adotante = adotanteService.salvar(adotanteAtualizar);
+        return AdotanteResponseDTO.fromEntity(adotante);
     }
 
     @DeleteMapping("/{adotanteId}")
