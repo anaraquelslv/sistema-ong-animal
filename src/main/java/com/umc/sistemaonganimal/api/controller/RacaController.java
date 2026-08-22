@@ -2,8 +2,6 @@ package com.umc.sistemaonganimal.api.controller;
 
 import com.umc.sistemaonganimal.api.dto.request.RacaRequestDTO;
 import com.umc.sistemaonganimal.api.dto.response.RacaResponseDTO;
-import com.umc.sistemaonganimal.domain.exception.DomainException;
-import com.umc.sistemaonganimal.domain.exception.EspecieNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Especie;
 import com.umc.sistemaonganimal.domain.model.Raca;
 import com.umc.sistemaonganimal.domain.service.RacaService;
@@ -42,17 +40,11 @@ public class RacaController {
 
     @PutMapping("/{racaId}")
     private RacaResponseDTO atualizar(@PathVariable Long racaId, @RequestBody @Valid RacaRequestDTO racaDTO) {
-
-        try {
-            Raca racaAtualizar = racaService.buscarPorId(racaId);
-            racaAtualizar.setNome(racaDTO.getNome());
-            racaAtualizar.setEspecie(Especie.builder().id(racaDTO.getEspecieId()).build());
-            Raca raca = racaService.salvar(racaAtualizar);
-            return RacaResponseDTO.fromEntity(raca);
-        } catch (EspecieNotFoundException e) {
-            throw new DomainException(e.getMessage(), e);
-        }
-
+        Raca racaAtualizar = racaService.buscarPorId(racaId);
+        racaAtualizar.setNome(racaDTO.getNome());
+        racaAtualizar.setEspecie(Especie.builder().id(racaDTO.getEspecieId()).build());
+        Raca raca = racaService.salvar(racaAtualizar);
+        return RacaResponseDTO.fromEntity(raca);
     }
 
     @DeleteMapping("/{racaId}")

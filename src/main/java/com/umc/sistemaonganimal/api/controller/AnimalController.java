@@ -2,9 +2,6 @@ package com.umc.sistemaonganimal.api.controller;
 
 import com.umc.sistemaonganimal.api.dto.request.AnimalRequestDTO;
 import com.umc.sistemaonganimal.api.dto.response.AnimalResponseDTO;
-import com.umc.sistemaonganimal.domain.exception.AdotanteNotFoundException;
-import com.umc.sistemaonganimal.domain.exception.DomainException;
-import com.umc.sistemaonganimal.domain.exception.RacaNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.model.Raca;
@@ -38,43 +35,32 @@ public class AnimalController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public AnimalResponseDTO adicionar(@RequestBody @Valid AnimalRequestDTO animalDTO) {
-        try {
-            Animal animal = animalService.salvar(animalDTO.toEntity());
-            return AnimalResponseDTO.fromEntity(animal);
-        } catch (AdotanteNotFoundException | RacaNotFoundException ex) {
-            throw new DomainException(ex.getMessage(), ex);
-        }
-
+        Animal animal = animalService.salvar(animalDTO.toEntity());
+        return AnimalResponseDTO.fromEntity(animal);
     }
 
     @PutMapping("/{animalId}")
     public AnimalResponseDTO atualizar(@PathVariable Long animalId, @RequestBody @Valid AnimalRequestDTO animalDTO) {
-        try {
-            Animal animalAtualizar = animalService.buscarPorId(animalId);
+        Animal animalAtualizar = animalService.buscarPorId(animalId);
 
-            animalAtualizar.setNome(animalDTO.getNome());
-            animalAtualizar.setIdade(animalDTO.getIdade());
-            animalAtualizar.setPorte(animalDTO.getPorte());
-            animalAtualizar.setSexo(animalDTO.getSexo());
-            animalAtualizar.setStatus(animalDTO.getStatus());
-            animalAtualizar.setCastrado(animalDTO.isCastrado());
-            animalAtualizar.setDataResgate(animalDTO.getDataResgate());
-            animalAtualizar.setDataSaida(animalDTO.getDataSaida());
-            animalAtualizar.setCorOlhos(animalDTO.getCorOlhos());
-            animalAtualizar.setCorPelagem(animalDTO.getCorPelagem());
-            animalAtualizar.setObservacao(animalDTO.getObservacao());
-            animalAtualizar.setRaca(Raca.builder().id(animalDTO.getRacaId()).build());
-            animalAtualizar.setAdotante(animalDTO.getAdotanteId() != null
-                    ? Adotante.builder().id(animalDTO.getAdotanteId()).build()
-                    : null);
+        animalAtualizar.setNome(animalDTO.getNome());
+        animalAtualizar.setIdade(animalDTO.getIdade());
+        animalAtualizar.setPorte(animalDTO.getPorte());
+        animalAtualizar.setSexo(animalDTO.getSexo());
+        animalAtualizar.setStatus(animalDTO.getStatus());
+        animalAtualizar.setCastrado(animalDTO.isCastrado());
+        animalAtualizar.setDataResgate(animalDTO.getDataResgate());
+        animalAtualizar.setDataSaida(animalDTO.getDataSaida());
+        animalAtualizar.setCorOlhos(animalDTO.getCorOlhos());
+        animalAtualizar.setCorPelagem(animalDTO.getCorPelagem());
+        animalAtualizar.setObservacao(animalDTO.getObservacao());
+        animalAtualizar.setRaca(Raca.builder().id(animalDTO.getRacaId()).build());
+        animalAtualizar.setAdotante(animalDTO.getAdotanteId() != null
+                ? Adotante.builder().id(animalDTO.getAdotanteId()).build()
+                : null);
 
-            Animal animal = animalService.salvar(animalAtualizar);
-            return AnimalResponseDTO.fromEntity(animal);
-
-        } catch (AdotanteNotFoundException | RacaNotFoundException ex) {
-            throw new DomainException(ex.getMessage(), ex);
-        }
-
+        Animal animal = animalService.salvar(animalAtualizar);
+        return AnimalResponseDTO.fromEntity(animal);
     }
 
 //    TODO implementar exclusão lógica dos registros
