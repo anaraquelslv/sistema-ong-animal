@@ -63,8 +63,6 @@ public class AnimalController {
         return AnimalResponseDTO.fromEntity(animal);
     }
 
-//    TODO implementar exclusão lógica dos registros
-
     @DeleteMapping("/{animalId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void excluir(@PathVariable Long animalId) {

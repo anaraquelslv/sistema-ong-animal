@@ -5,6 +5,7 @@ import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalSexo;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "animal")
+@SQLRestriction("ativo = true")
 public class Animal {
     @Id
     @EqualsAndHashCode.Include
@@ -73,4 +75,8 @@ public class Animal {
     @ManyToOne
     @JoinColumn(name = "adotante_id")
     private Adotante adotante;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean ativo = true;
 }

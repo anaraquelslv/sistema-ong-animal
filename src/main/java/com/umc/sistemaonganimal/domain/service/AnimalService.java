@@ -1,6 +1,5 @@
 package com.umc.sistemaonganimal.domain.service;
 
-import com.umc.sistemaonganimal.domain.exception.AnimalInUseException;
 import com.umc.sistemaonganimal.domain.exception.AnimalNotFoundException;
 import com.umc.sistemaonganimal.domain.exception.DomainException;
 import com.umc.sistemaonganimal.domain.model.Adotante;
@@ -9,7 +8,6 @@ import com.umc.sistemaonganimal.domain.model.Raca;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalStatus;
 import com.umc.sistemaonganimal.domain.repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,13 +57,9 @@ public class AnimalService {
         return animalRepository.save(animal);
     }
 
-    @SuppressWarnings("null")
     public void excluir(Long id) {
-        try {
-            Animal animalExcluir = buscarPorId(id);
-            animalRepository.delete(animalExcluir);
-        } catch (DataIntegrityViolationException e) {
-            throw new AnimalInUseException(id);
-        }
+        Animal animalExcluir = buscarPorId(id);
+        animalExcluir.setAtivo(false);
+        animalRepository.save(animalExcluir);
     }
 }
