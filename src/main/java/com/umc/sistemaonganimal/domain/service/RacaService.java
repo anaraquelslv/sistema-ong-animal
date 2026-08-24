@@ -4,9 +4,9 @@ import com.umc.sistemaonganimal.domain.exception.RacaInUseException;
 import com.umc.sistemaonganimal.domain.exception.RacaNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Especie;
 import com.umc.sistemaonganimal.domain.model.Raca;
+import com.umc.sistemaonganimal.domain.repository.AnimalRepository;
 import com.umc.sistemaonganimal.domain.repository.RacaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +19,9 @@ public class RacaService {
 
     @Autowired
     private EspecieService especieService;
+
+    @Autowired
+    private AnimalRepository animalRepository;
 
     public List<Raca> listar() {
         return racaRepository.findAll();
@@ -39,15 +42,15 @@ public class RacaService {
         return racaRepository.save(raca);
     }
 
-    @SuppressWarnings("null")
     public void excluir(Long id) {
-        try {
-            Raca raca = buscarPorId(id);
-            racaRepository.delete(raca);
-        } catch (DataIntegrityViolationException e) {
+        Raca raca = buscarPorId(id);
+
+        if (animalRepository.existsByRacaId(id)) {
             throw new RacaInUseException(id);
         }
 
+        raca.setAtivo(false);
+        racaRepository.save(raca);
     }
 
 }
