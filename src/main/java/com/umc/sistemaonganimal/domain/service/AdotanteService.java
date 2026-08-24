@@ -4,8 +4,8 @@ import com.umc.sistemaonganimal.domain.exception.AdotanteInUseException;
 import com.umc.sistemaonganimal.domain.exception.AdotanteNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.repository.AdotanteRepository;
+import com.umc.sistemaonganimal.domain.repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,9 @@ public class AdotanteService {
 
     @Autowired
     private AdotanteRepository adotanteRepository;
+
+    @Autowired
+    private AnimalRepository animalRepository;
 
     public List<Adotante> listar() {
         return adotanteRepository.findAll();
@@ -30,14 +33,14 @@ public class AdotanteService {
         return adotanteRepository.save(adotante);
     }
 
-    @SuppressWarnings("null")
     public void excluir(Long id) {
-        try {
-            Adotante adotante = buscarPorId(id);
-            adotanteRepository.delete(adotante);
-        } catch (DataIntegrityViolationException e) {
+        Adotante adotante = buscarPorId(id);
+
+        if (animalRepository.existsByAdotanteId(id)) {
             throw new AdotanteInUseException(id);
         }
 
+        adotante.setAtivo(false);
+        adotanteRepository.save(adotante);
     }
 }

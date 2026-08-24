@@ -6,6 +6,7 @@ import com.umc.sistemaonganimal.domain.model.embeddables.Documento;
 import com.umc.sistemaonganimal.domain.model.embeddables.Endereco;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "Adotante")
+@SQLRestriction("ativo = true")
 public class Adotante {
 
     @Id
@@ -44,5 +46,8 @@ public class Adotante {
     @Embedded
     private Endereco endereco;
 
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean ativo = true;
 
 }
