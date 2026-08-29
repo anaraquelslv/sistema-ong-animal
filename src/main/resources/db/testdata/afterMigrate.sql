@@ -32,21 +32,21 @@ INSERT INTO adotante (
 -- 4. Inserindo os 5 Animais (Cobrindo todos os status do CHECK)
 
 -- Animal 1: Cachorro SRD, Disponível
-INSERT INTO animal (nome, idade, sexo, porte, status, castrado, dt_resgate, raca_id, cor_pelagem, observacao)
-VALUES ('Paçoca', 2, 'MACHO', 'MEDIO', 'DISPONIVEL', TRUE, '2023-11-10', 1, 'Caramelo', 'Muito dócil e brincalhão');
+INSERT INTO animal (nome, idade_meses, sexo, porte, status, castrado, dt_resgate, raca_id, cor_pelagem, observacao)
+VALUES ('Paçoca', 24, 'MACHO', 'MEDIO', 'DISPONIVEL', TRUE, '2023-11-10', 1, 'Caramelo', 'Muito dócil e brincalhão');
 
 -- Animal 2: Gato Siamês, Em Tratamento
-INSERT INTO animal (nome, idade, sexo, porte, status, castrado, dt_resgate, raca_id, cor_olhos, observacao)
-VALUES ('Luna', 4, 'FEMEA', 'PEQUENO', 'EM_TRATAMENTO', TRUE, '2024-01-05', 3, 'Azul', 'Realizando tratamento dermatológico');
+INSERT INTO animal (nome, idade_meses, sexo, porte, status, castrado, dt_resgate, raca_id, cor_olhos, observacao)
+VALUES ('Luna', 48, 'FEMEA', 'PEQUENO', 'EM_TRATAMENTO', TRUE, '2024-01-05', 3, 'Azul', 'Realizando tratamento dermatológico');
 
 -- Animal 3: Cachorro Labrador, Adotado (Vinculado ao Adotante ID 1)
-INSERT INTO animal (nome, idade, sexo, porte, status, castrado, dt_resgate, dt_saida, raca_id, adotante_id)
-VALUES ('Thor', 5, 'MACHO', 'GRANDE', 'ADOTADO', TRUE, '2023-06-20', '2023-12-01', 2, 1);
+INSERT INTO animal (nome, idade_meses, sexo, porte, status, castrado, dt_resgate, dt_saida, raca_id, adotante_id)
+VALUES ('Thor', 60, 'MACHO', 'GRANDE', 'ADOTADO', TRUE, '2023-06-20', '2023-12-01', 2, 1);
 
 -- Animal 4: Gato Persa, Quarentena (Recém chegado)
-INSERT INTO animal (nome, idade, sexo, porte, status, castrado, dt_resgate, raca_id, observacao)
-VALUES ('Garfield', 6, 'MACHO', 'MEDIO', 'QUARENTENA', FALSE, CURRENT_DATE, 4, 'Aguardando exames iniciais');
+INSERT INTO animal (nome, idade_meses, sexo, porte, status, castrado, dt_resgate, raca_id, observacao)
+VALUES ('Garfield', 72, 'MACHO', 'MEDIO', 'QUARENTENA', FALSE, CURRENT_DATE, 4, 'Aguardando exames iniciais');
 
 -- Animal 5: Cachorro SRD, Óbito (Infelizmente faleceu)
-INSERT INTO animal (nome, idade, sexo, porte, status, castrado, dt_resgate, dt_saida, raca_id, observacao)
-VALUES ('Velhinho', 15, 'MACHO', 'PEQUENO', 'OBITO', TRUE, '2023-01-01', '2023-01-15', 1, 'Faleceu de causas naturais devido à idade avançada');
+INSERT INTO animal (nome, idade_meses, sexo, porte, status, castrado, dt_resgate, dt_saida, raca_id, observacao)
+VALUES ('Velhinho', 180, 'MACHO', 'PEQUENO', 'OBITO', TRUE, '2023-01-01', '2023-01-15', 1, 'Faleceu de causas naturais devido à idade avançada');

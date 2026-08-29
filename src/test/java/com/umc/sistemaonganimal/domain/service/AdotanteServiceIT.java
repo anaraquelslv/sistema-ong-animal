@@ -163,7 +163,7 @@ class AdotanteServiceIT {
 
         Animal animal = Animal.builder()
                 .nome("Animal adotado de teste")
-                .idade(2)
+                .idadeMeses(2)
                 .porte(AnimalPorte.MEDIO)
                 .sexo(AnimalSexo.FEMEA)
                 .status(AnimalStatus.ADOTADO)

@@ -23,7 +23,7 @@ public class AnimalResponseDTO {
 
     private String nome;
 
-    private int idade;
+    private int idadeMeses;
 
     private AnimalPorte porte;
 
@@ -54,7 +54,7 @@ public class AnimalResponseDTO {
         return AnimalResponseDTO.builder()
                 .id(animal.getId())
                 .nome(animal.getNome())
-                .idade(animal.getIdade())
+                .idadeMeses(animal.getIdadeMeses())
                 .porte(animal.getPorte())
                 .sexo(animal.getSexo())
                 .status(animal.getStatus())

@@ -135,7 +135,7 @@ class RacaServiceIT {
 
         Animal animal = Animal.builder()
                 .nome("Animal de teste")
-                .idade(1)
+                .idadeMeses(1)
                 .porte(AnimalPorte.PEQUENO)
                 .sexo(AnimalSexo.MACHO)
                 .status(AnimalStatus.DISPONIVEL)

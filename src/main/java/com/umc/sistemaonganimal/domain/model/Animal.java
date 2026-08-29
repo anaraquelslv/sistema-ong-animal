@@ -32,7 +32,7 @@ public class Animal {
     private String nome;
 
     @ToString.Include
-    private int idade;
+    private int idadeMeses;
 
     @ToString.Include
     @Column(nullable = false)

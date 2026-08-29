@@ -44,7 +44,7 @@ public class AnimalController {
         Animal animalAtualizar = animalService.buscarPorId(animalId);
 
         animalAtualizar.setNome(animalDTO.getNome());
-        animalAtualizar.setIdade(animalDTO.getIdade());
+        animalAtualizar.setIdadeMeses(animalDTO.getIdadeMeses());
         animalAtualizar.setPorte(animalDTO.getPorte());
         animalAtualizar.setSexo(animalDTO.getSexo());
         animalAtualizar.setStatus(animalDTO.getStatus());

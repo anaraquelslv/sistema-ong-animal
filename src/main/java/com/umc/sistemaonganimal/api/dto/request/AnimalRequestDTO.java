@@ -29,7 +29,7 @@ public class AnimalRequestDTO {
     private String nome;
 
     @PositiveOrZero
-    private int idade;
+    private int idadeMeses;
 
     @NotNull
     private AnimalPorte porte;
@@ -61,7 +61,7 @@ public class AnimalRequestDTO {
     public Animal toEntity() {
         return Animal.builder()
                 .nome(nome)
-                .idade(idade)
+                .idadeMeses(idadeMeses)
                 .porte(porte)
                 .sexo(sexo)
                 .status(status)
