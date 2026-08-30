@@ -2,7 +2,9 @@ package com.umc.sistemaonganimal.domain.service;
 
 import com.umc.sistemaonganimal.domain.exception.AdotanteInUseException;
 import com.umc.sistemaonganimal.domain.exception.AdotanteNotFoundException;
+import com.umc.sistemaonganimal.domain.exception.DomainException;
 import com.umc.sistemaonganimal.domain.model.Adotante;
+import com.umc.sistemaonganimal.domain.model.embeddables.Contato;
 import com.umc.sistemaonganimal.domain.repository.AdotanteRepository;
 import com.umc.sistemaonganimal.domain.repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,13 @@ public class AdotanteService {
     }
 
     public Adotante salvar(@NonNull Adotante adotante) {
+        Contato contato = adotante.getContato();
+        if (contato != null
+                && contato.getTelefonePrincipal() != null
+                && contato.getTelefonePrincipal().equals(contato.getTelefoneSecundario())) {
+            throw new DomainException("Telefone secundário deve ser diferente do telefone principal");
+        }
+
         return adotanteRepository.save(adotante);
     }
 
