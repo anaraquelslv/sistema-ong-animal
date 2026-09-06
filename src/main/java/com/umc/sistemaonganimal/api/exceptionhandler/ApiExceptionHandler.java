@@ -1,6 +1,7 @@
 package com.umc.sistemaonganimal.api.exceptionhandler;
 
 import com.umc.sistemaonganimal.domain.exception.DomainException;
+import com.umc.sistemaonganimal.domain.exception.EntityExistsException;
 import com.umc.sistemaonganimal.domain.exception.EntityInUseException;
 import com.umc.sistemaonganimal.domain.exception.EntityNotFoundException;
 import org.springframework.http.*;
@@ -35,6 +36,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ProblemDetail handleEntityInUseException(EntityInUseException ex) {
         return createProblemDetail(HttpStatus.CONFLICT, ex.getMessage(), "Entidade em uso",
                 "https://pivic-ong/entidade-em-uso");
+    }
+
+    @ExceptionHandler(EntityExistsException.class)
+    public ProblemDetail handleEntityExistsException(EntityExistsException ex) {
+        return createProblemDetail(HttpStatus.CONFLICT, ex.getMessage(), "Entidade já existente",
+                "https://pivic-ong/entidade-existente");
     }
 
     @ExceptionHandler(DomainException.class)

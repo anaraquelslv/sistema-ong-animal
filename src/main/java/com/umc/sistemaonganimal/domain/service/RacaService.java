@@ -1,5 +1,6 @@
 package com.umc.sistemaonganimal.domain.service;
 
+import com.umc.sistemaonganimal.domain.exception.RacaExistenteException;
 import com.umc.sistemaonganimal.domain.exception.RacaInUseException;
 import com.umc.sistemaonganimal.domain.exception.RacaNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Especie;
@@ -38,6 +39,14 @@ public class RacaService {
         Especie especie = especieService.buscarPorId(especieId);
 
         raca.setEspecie(especie);
+
+        boolean nomeDuplicado = raca.getId() == null
+                ? racaRepository.existsByNomeIgnoreCaseAndEspecieId(raca.getNome(), especieId)
+                : racaRepository.existsByNomeIgnoreCaseAndEspecieIdAndIdNot(raca.getNome(), especieId, raca.getId());
+
+        if (nomeDuplicado) {
+            throw new RacaExistenteException(raca.getNome(), especie.getNome().name());
+        }
 
         return racaRepository.save(raca);
     }

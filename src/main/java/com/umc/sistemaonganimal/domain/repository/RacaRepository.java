@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RacaRepository extends JpaRepository<Raca, Long> {
+
+    boolean existsByNomeIgnoreCaseAndEspecieId(String nome, Long especieId);
+
+    boolean existsByNomeIgnoreCaseAndEspecieIdAndIdNot(String nome, Long especieId, Long id);
 }

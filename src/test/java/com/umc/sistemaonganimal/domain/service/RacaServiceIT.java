@@ -1,5 +1,6 @@
 package com.umc.sistemaonganimal.domain.service;
 
+import com.umc.sistemaonganimal.domain.exception.RacaExistenteException;
 import com.umc.sistemaonganimal.domain.exception.RacaInUseException;
 import com.umc.sistemaonganimal.domain.exception.RacaNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Animal;
@@ -16,6 +17,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -55,15 +58,25 @@ class RacaServiceIT {
 
     // Método auxiliar que cria e persiste uma Raça nova, isolada dos dados do
     // fixture, para que cada teste tenha seu próprio registro para excluir.
+    // O nome inclui um sufixo aleatório para que chamadas repetidas dentro do
+    // mesmo teste (mesma espécie) não colidam com a validação de nome duplicado.
     private Raca criarRaca() {
-        // Pega uma espécie qualquer já cadastrada no banco (não importa qual), só
-        // para satisfazer o vínculo obrigatório Raca -> Especie.
         Especie especieExistente = especieService.listar().get(0);
+        return criarRaca("Raça de teste " + sufixoUnico(), especieExistente.getId());
+    }
 
-        // Monta uma Raça válida em memória, vinculada à espécie obtida acima.
+    // Gera um sufixo curto e único (8 caracteres), para caber no limite de 50
+    // caracteres da coluna "nome" mesmo quando combinado com um prefixo descritivo.
+    private String sufixoUnico() {
+        return UUID.randomUUID().toString().substring(0, 8);
+    }
+
+    // Variante que permite controlar nome e espécie explicitamente, usada pelos
+    // testes de validação de nome duplicado.
+    private Raca criarRaca(String nome, Long especieId) {
         Raca raca = Raca.builder()
-                .nome("Raça de teste")
-                .especie(Especie.builder().id(especieExistente.getId()).build())
+                .nome(nome)
+                .especie(Especie.builder().id(especieId).build())
                 .build();
 
         // Persiste a Raça via service (não direto no repository) para passar pelas
@@ -202,5 +215,84 @@ class RacaServiceIT {
                 .extracting(Raca::getId)
                 .contains(racaMantida.getId())
                 .doesNotContain(racaExcluida.getId());
+    }
+
+    // UNHAPPY PATH: não deve ser possível cadastrar duas Raças com o mesmo nome
+    // para a mesma Espécie.
+    @Test
+    void salvar_comNomeJaExistenteNaMesmaEspecie_deveLancarRacaExistenteException() {
+        Especie especie = especieService.listar().get(0);
+        Raca racaExistente = criarRaca("Raça duplicada " + sufixoUnico(), especie.getId());
+
+        Raca racaNova = Raca.builder()
+                .nome(racaExistente.getNome())
+                .especie(Especie.builder().id(especie.getId()).build())
+                .build();
+
+        assertThatThrownBy(() -> racaService.salvar(racaNova))
+                .isInstanceOf(RacaExistenteException.class);
+    }
+
+    // HAPPY PATH: o mesmo nome de Raça pode ser cadastrado em Espécies diferentes,
+    // já que a regra de duplicidade é escopada por (nome, espécie).
+    @Test
+    void salvar_comMesmoNomeEmEspeciesDiferentes_devePermitir() {
+        List<Especie> especies = especieService.listar();
+        assertThat(especies).hasSizeGreaterThanOrEqualTo(2);
+
+        String nome = "Raça comum " + sufixoUnico();
+        Raca racaPrimeiraEspecie = criarRaca(nome, especies.get(0).getId());
+
+        Raca racaSegundaEspecie = Raca.builder()
+                .nome(nome)
+                .especie(Especie.builder().id(especies.get(1).getId()).build())
+                .build();
+
+        Raca resultado = racaService.salvar(racaSegundaEspecie);
+
+        assertThat(resultado.getId()).isNotEqualTo(racaPrimeiraEspecie.getId());
+        assertThat(resultado.getNome()).isEqualTo(nome);
+    }
+
+    // HAPPY PATH: atualizar uma Raça mantendo o próprio nome não deve disparar a
+    // validação de duplicidade (a Raça não pode "colidir consigo mesma").
+    // Monta a entidade de atualização "solta" (só com os campos necessários, sem
+    // reaproveitar a instância retornada por criarRaca()) para reproduzir fielmente
+    // o que o controller faz em RacaController.atualizar: busca em uma chamada,
+    // atualiza em outra. Reutilizar a instância gerenciada faria o Hibernate
+    // auto-flush a mudança antes da checagem de duplicidade rodar, mascarando o
+    // comportamento real da regra de negócio.
+    @Test
+    void salvar_atualizandoComMesmoNomeDaPropriaRaca_naoDeveLancarExcecao() {
+        Raca racaCriada = criarRaca();
+
+        Raca racaParaAtualizar = Raca.builder()
+                .id(racaCriada.getId())
+                .nome(racaCriada.getNome())
+                .especie(Especie.builder().id(racaCriada.getEspecie().getId()).build())
+                .build();
+
+        Raca resultado = racaService.salvar(racaParaAtualizar);
+
+        assertThat(resultado.getId()).isEqualTo(racaCriada.getId());
+    }
+
+    // UNHAPPY PATH: atualizar uma Raça para um nome já usado por outra Raça da
+    // mesma Espécie deve lançar RacaExistenteException. Mesma observação do teste
+    // acima sobre usar uma entidade "solta" em vez da instância gerenciada.
+    @Test
+    void salvar_atualizandoParaNomeUsadoPorOutraRacaNaMesmaEspecie_deveLancarRacaExistenteException() {
+        Especie especie = especieService.listar().get(0);
+        Raca racaExistente = criarRaca("Raça alvo " + sufixoUnico(), especie.getId());
+        Raca racaParaAtualizar = criarRaca("Raça a atualizar " + sufixoUnico(), especie.getId());
+
+        Raca racaComNomeConflitante = Raca.builder()
+                .id(racaParaAtualizar.getId())
+                .nome(racaExistente.getNome())
+                .especie(Especie.builder().id(especie.getId()).build())
+                .build();
+
+        assertThatThrownBy(() -> racaService.salvar(racaComNomeConflitante))
+                .isInstanceOf(RacaExistenteException.class);
     }
 }
