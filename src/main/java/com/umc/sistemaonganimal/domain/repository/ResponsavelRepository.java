@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ResponsavelRepository extends JpaRepository<Responsavel, Long> {
+    boolean existsByContatoEmailIgnoreCase(String email);
+
+    boolean existsByContatoEmailIgnoreCaseAndIdNot(String email, Long id);
 }

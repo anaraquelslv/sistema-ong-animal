@@ -27,7 +27,8 @@ public class ResponsavelController {
 
     @GetMapping("/{responsavelId}")
     public ResponsavelResponseDTO buscar(@PathVariable Long responsavelId) {
-        return ResponsavelResponseDTO.fromEntity(responsavelService.buscarPorId(responsavelId));
+        Responsavel responsavel = responsavelService.buscarPorId(responsavelId);
+        return ResponsavelResponseDTO.fromEntity(responsavel, responsavelService.listarAnimaisVinculados(responsavelId));
     }
 
     @PostMapping

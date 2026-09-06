@@ -1,9 +1,12 @@
 package com.umc.sistemaonganimal.domain.service;
 
 import com.umc.sistemaonganimal.domain.exception.DomainException;
+import com.umc.sistemaonganimal.domain.exception.ResponsavelExistenteException;
 import com.umc.sistemaonganimal.domain.exception.ResponsavelInUseException;
 import com.umc.sistemaonganimal.domain.exception.ResponsavelNotFoundException;
+import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.model.Responsavel;
+import com.umc.sistemaonganimal.domain.model.embeddables.Contato;
 import com.umc.sistemaonganimal.domain.model.embeddables.Documento;
 import com.umc.sistemaonganimal.domain.repository.AnimalRepository;
 import com.umc.sistemaonganimal.domain.repository.ResponsavelRepository;
@@ -30,6 +33,10 @@ public class ResponsavelService {
         return responsavelRepository.findById(id).orElseThrow(() -> new ResponsavelNotFoundException(id));
     }
 
+    public List<Animal> listarAnimaisVinculados(Long responsavelId) {
+        return animalRepository.findByResponsavelId(responsavelId);
+    }
+
     public Responsavel salvar(Responsavel responsavel) {
         Documento documento = responsavel.getDocumento();
         String cpf = documento != null ? documento.getCpf() : null;
@@ -37,6 +44,23 @@ public class ResponsavelService {
 
         if (cpf != null && !cpf.isBlank() && cnpj != null && !cnpj.isBlank()) {
             throw new DomainException("CPF e CNPJ não podem ser preenchidos ao mesmo tempo.");
+        }
+
+        if ((cpf == null || cpf.isBlank()) && (cnpj == null || cnpj.isBlank())) {
+            throw new DomainException("É obrigatório informar CPF ou CNPJ.");
+        }
+
+        Contato contato = responsavel.getContato();
+        String email = contato != null ? contato.getEmail() : null;
+
+        if (email != null && !email.isBlank()) {
+            boolean emailDuplicado = responsavel.getId() == null
+                    ? responsavelRepository.existsByContatoEmailIgnoreCase(email)
+                    : responsavelRepository.existsByContatoEmailIgnoreCaseAndIdNot(email, responsavel.getId());
+
+            if (emailDuplicado) {
+                throw ResponsavelExistenteException.porEmail(email);
+            }
         }
 
         return responsavelRepository.save(responsavel);
@@ -48,6 +72,9 @@ public class ResponsavelService {
         if (animalRepository.existsByResponsavelId(id)) {
             throw new ResponsavelInUseException(id);
         }
+
+        // TODO: bloquear exclusão também se o responsável estiver vinculado a um Voluntário,
+        // quando essa entidade existir no domínio (não existe hoje no projeto).
 
         responsavel.setAtivo(false);
         responsavelRepository.save(responsavel);
