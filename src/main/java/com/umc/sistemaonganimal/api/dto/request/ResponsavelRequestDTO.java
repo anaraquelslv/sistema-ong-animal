@@ -25,8 +25,10 @@ public class ResponsavelRequestDTO {
     @NotBlank
     private String nome;
 
-    // Sem @Valid: reaproveita a estrutura de DocumentoDTO (cpf/rg/orgaoRg) sem herdar
-    // o @NotBlank do cpf, já que aqui CPF é opcional (mutuamente exclusivo com CNPJ).
+    // @Valid roda no grupo Default: valida o formato do CPF (@CPF) quando presente,
+    // mas não exige (o @NotBlank do cpf só é checado no grupo Groups.CpfObrigatorio,
+    // usado por AdotanteController) — aqui CPF é opcional (mutuamente exclusivo com CNPJ).
+    @Valid
     private DocumentoDTO documento;
 
     @CNPJ

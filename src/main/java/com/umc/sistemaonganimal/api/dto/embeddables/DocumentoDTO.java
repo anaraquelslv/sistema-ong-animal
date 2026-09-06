@@ -1,5 +1,6 @@
 package com.umc.sistemaonganimal.api.dto.embeddables;
 
+import com.umc.sistemaonganimal.core.validation.Groups;
 import com.umc.sistemaonganimal.domain.model.embeddables.Documento;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import org.hibernate.validator.constraints.br.CPF;
 @Builder
 public class DocumentoDTO {
 
-    @NotBlank
+    @NotBlank(groups = Groups.CpfObrigatorio.class)
     @CPF
     private String cpf;
 

@@ -2,11 +2,12 @@ package com.umc.sistemaonganimal.api.controller;
 
 import com.umc.sistemaonganimal.api.dto.request.AdotanteRequestDTO;
 import com.umc.sistemaonganimal.api.dto.response.AdotanteResponseDTO;
+import com.umc.sistemaonganimal.core.validation.Groups;
 import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.service.AdotanteService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,13 +33,13 @@ public class AdotanteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AdotanteResponseDTO adicionar(@RequestBody @Valid AdotanteRequestDTO adotanteDTO) {
+    public AdotanteResponseDTO adicionar(@RequestBody @Validated(Groups.CpfObrigatorio.class) AdotanteRequestDTO adotanteDTO) {
         Adotante adotante = adotanteService.salvar(adotanteDTO.toEntity());
         return AdotanteResponseDTO.fromEntity(adotante);
     }
 
     @PutMapping("/{adotanteId}")
-    public AdotanteResponseDTO atualizar(@PathVariable Long adotanteId, @RequestBody @Valid AdotanteRequestDTO adotanteDTO) {
+    public AdotanteResponseDTO atualizar(@PathVariable Long adotanteId, @RequestBody @Validated(Groups.CpfObrigatorio.class) AdotanteRequestDTO adotanteDTO) {
         Adotante adotanteAtualizar = adotanteService.buscarPorId(adotanteId);
         adotanteAtualizar.setNome(adotanteDTO.getNome());
         adotanteAtualizar.setDataNascimento(adotanteDTO.getDataNascimento());

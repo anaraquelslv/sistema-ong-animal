@@ -263,6 +263,27 @@ class AdotanteControllerIT {
                 .body("detalhes.nome", notNullValue());
     }
 
+    // UNHAPPY PATH: POST /adotantes sem CPF deve ser barrado pela validação de bean
+    // (Groups.CpfObrigatorio, exigido pelo controller via @Validated) antes de chegar
+    // ao service, resultando em 400 Bad Request com o campo inválido em "detalhes".
+    // Guarda contra regressão: CPF precisa continuar obrigatório para Adotante mesmo
+    // com DocumentoDTO.cpf agora sendo opcional por padrão (usado também por
+    // Responsavel).
+    @Test
+    void adicionar_semCpf_deveRetornarBadRequestComDetalheDoCampo() {
+        AdotanteRequestDTO payloadInvalido = montarAdotanteValido();
+        payloadInvalido.getDocumento().setCpf(null);
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(payloadInvalido)
+                .when()
+                .post("/adotantes")
+                .then()
+                .statusCode(400)
+                .body("detalhes['documento.cpf']", notNullValue());
+    }
+
     private Long criarAdotanteViaApi() {
         return given()
                 .contentType(ContentType.JSON)

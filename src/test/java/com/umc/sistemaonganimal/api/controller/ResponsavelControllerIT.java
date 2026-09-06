@@ -186,6 +186,21 @@ class ResponsavelControllerIT {
     }
 
     @Test
+    void adicionar_comCpfInvalido_deveRetornarBadRequest() {
+        ResponsavelRequestDTO payloadInvalido = montarResponsavelValido();
+        payloadInvalido.setDocumento(DocumentoDTO.builder().cpf("11111111111").build());
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(payloadInvalido)
+                .when()
+                .post("/responsaveis")
+                .then()
+                .statusCode(400)
+                .body("detalhes['documento.cpf']", notNullValue());
+    }
+
+    @Test
     void adicionar_semNome_deveRetornarBadRequestComDetalheDoCampo() {
         ResponsavelRequestDTO payloadInvalido = montarResponsavelValido();
         payloadInvalido.setNome(null);
