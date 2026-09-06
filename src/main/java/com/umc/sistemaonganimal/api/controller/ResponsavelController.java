@@ -3,6 +3,7 @@ package com.umc.sistemaonganimal.api.controller;
 import com.umc.sistemaonganimal.api.dto.request.ResponsavelRequestDTO;
 import com.umc.sistemaonganimal.api.dto.response.ResponsavelResponseDTO;
 import com.umc.sistemaonganimal.domain.model.Responsavel;
+import com.umc.sistemaonganimal.domain.model.Tipo;
 import com.umc.sistemaonganimal.domain.service.ResponsavelService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ public class ResponsavelController {
         responsavelAtualizar.setContato(responsavelDTO.getContato() != null ? responsavelDTO.getContato().toEntity() : null);
         responsavelAtualizar.setEndereco(responsavelDTO.getEndereco() != null ? responsavelDTO.getEndereco().toEntity() : null);
         responsavelAtualizar.setQtdAnimais(responsavelDTO.getQtdAnimais());
+        responsavelAtualizar.setTipo(Tipo.builder().id(responsavelDTO.getTipoId()).build());
 
         Responsavel responsavel = responsavelService.salvar(responsavelAtualizar);
         return ResponsavelResponseDTO.fromEntity(responsavel);

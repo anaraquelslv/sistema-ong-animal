@@ -5,6 +5,7 @@ import com.umc.sistemaonganimal.api.dto.embeddables.DocumentoDTO;
 import com.umc.sistemaonganimal.api.dto.embeddables.EnderecoDTO;
 import com.umc.sistemaonganimal.api.dto.request.ResponsavelRequestDTO;
 import com.umc.sistemaonganimal.domain.repository.ResponsavelRepository;
+import com.umc.sistemaonganimal.domain.repository.TipoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -34,6 +35,9 @@ class ResponsavelControllerIT {
 
     @Autowired
     private ResponsavelRepository responsavelRepository;
+
+    @Autowired
+    private TipoRepository tipoRepository;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -78,6 +82,7 @@ class ResponsavelControllerIT {
                         .numero("100")
                         .build())
                 .qtdAnimais(3)
+                .tipoId(tipoRepository.findAll().get(0).getId())
                 .build();
     }
 

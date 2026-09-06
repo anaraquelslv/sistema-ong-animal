@@ -34,6 +34,8 @@ public class ResponsavelResponseDTO {
 
     private Integer qtdAnimais;
 
+    private TipoResponseDTO tipo;
+
     private List<AnimalResponseDTO> animaisVinculados;
 
     public static ResponsavelResponseDTO fromEntity(Responsavel responsavel) {
@@ -52,6 +54,7 @@ public class ResponsavelResponseDTO {
                 .contato(ContatoDTO.fromEntity(responsavel.getContato()))
                 .endereco(EnderecoDTO.fromEntity(responsavel.getEndereco()))
                 .qtdAnimais(responsavel.getQtdAnimais())
+                .tipo(TipoResponseDTO.fromEntity(responsavel.getTipo()))
                 .animaisVinculados(animaisVinculados != null
                         ? animaisVinculados.stream().map(AnimalResponseDTO::fromEntity).toList()
                         : null)

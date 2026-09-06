@@ -4,6 +4,7 @@ import com.umc.sistemaonganimal.api.dto.embeddables.ContatoDTO;
 import com.umc.sistemaonganimal.api.dto.embeddables.DocumentoDTO;
 import com.umc.sistemaonganimal.api.dto.embeddables.EnderecoDTO;
 import com.umc.sistemaonganimal.domain.model.Responsavel;
+import com.umc.sistemaonganimal.domain.model.Tipo;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -45,6 +46,9 @@ public class ResponsavelRequestDTO {
     @PositiveOrZero
     private Integer qtdAnimais;
 
+    @NotNull
+    private Long tipoId;
+
     public Responsavel toEntity() {
         return Responsavel.builder()
                 .nome(nome)
@@ -53,6 +57,7 @@ public class ResponsavelRequestDTO {
                 .contato(contato != null ? contato.toEntity() : null)
                 .endereco(endereco != null ? endereco.toEntity() : null)
                 .qtdAnimais(qtdAnimais)
+                .tipo(Tipo.builder().id(tipoId).build())
                 .build();
     }
 }

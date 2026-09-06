@@ -6,6 +6,7 @@ import com.umc.sistemaonganimal.domain.exception.ResponsavelInUseException;
 import com.umc.sistemaonganimal.domain.exception.ResponsavelNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.model.Responsavel;
+import com.umc.sistemaonganimal.domain.model.Tipo;
 import com.umc.sistemaonganimal.domain.model.embeddables.Contato;
 import com.umc.sistemaonganimal.domain.model.embeddables.Documento;
 import com.umc.sistemaonganimal.domain.repository.AnimalRepository;
@@ -24,6 +25,9 @@ public class ResponsavelService {
     @Autowired
     private AnimalRepository animalRepository;
 
+    @Autowired
+    private TipoService tipoService;
+
     public List<Responsavel> listar() {
         return responsavelRepository.findAll();
     }
@@ -38,6 +42,9 @@ public class ResponsavelService {
     }
 
     public Responsavel salvar(Responsavel responsavel) {
+        Tipo tipo = tipoService.buscarPorId(responsavel.getTipo().getId());
+        responsavel.setTipo(tipo);
+
         Documento documento = responsavel.getDocumento();
         String cpf = documento != null ? documento.getCpf() : null;
         String cnpj = responsavel.getCnpj();

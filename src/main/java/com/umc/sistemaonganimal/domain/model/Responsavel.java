@@ -42,6 +42,10 @@ public class Responsavel {
     @Column(name = "qtd_animais")
     private Integer qtdAnimais;
 
+    @ManyToOne
+    @JoinColumn(name = "tipo_id", nullable = false)
+    private Tipo tipo;
+
     @Builder.Default
     @Column(nullable = false)
     private boolean ativo = true;

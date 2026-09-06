@@ -3,6 +3,7 @@ TRUNCATE
     adotante,
     especie,
     raca,
+    tipo,
     responsavel
 RESTART IDENTITY CASCADE;
 
@@ -10,6 +11,13 @@ RESTART IDENTITY CASCADE;
 INSERT INTO especie (nome) VALUES
                                ('CACHORRO'),
                                ('GATO');
+
+-- 1.1 Inserindo os Tipos de Responsável (Assumindo ID 1=Abrigo, 2=Lar Temporário, 3=ONG, 4=Protetor Independente)
+INSERT INTO tipo (nome) VALUES
+                            ('ABRIGO'),
+                            ('LAR_TEMPORARIO'),
+                            ('ONG'),
+                            ('PROTETOR_INDEPENDENTE');
 
 -- 2. Inserindo Raças (Assumindo ID 1=Cachorro, ID 2=Gato)
 INSERT INTO raca (nome, especie_id) VALUES
@@ -31,11 +39,11 @@ INSERT INTO adotante (
          );
 
 -- 4. Inserindo os Responsáveis (origem dos animais resgatados)
-INSERT INTO responsavel (nome, cpf, telefone1, email, logradouro, bairro, cidade, estado, cep, num_endereco)
-VALUES ('Maria Protetora', '98765432100', '11988887777', 'maria.protetora@email.com', 'Rua dos Protetores', 'Vila Nova', 'São Paulo', 'SP', '02002000', '50');
+INSERT INTO responsavel (nome, cpf, telefone1, email, logradouro, bairro, cidade, estado, cep, num_endereco, tipo_id)
+VALUES ('Maria Protetora', '98765432100', '11988887777', 'maria.protetora@email.com', 'Rua dos Protetores', 'Vila Nova', 'São Paulo', 'SP', '02002000', '50', 4);
 
-INSERT INTO responsavel (nome, cnpj, telefone1, email, logradouro, bairro, cidade, estado, cep, num_endereco)
-VALUES ('ONG Patinhas Carentes', '11444777000161', '1133334444', 'contato@patinhascarentes.org', 'Avenida dos Animais', 'Jardim Esperança', 'São Paulo', 'SP', '03003000', '200');
+INSERT INTO responsavel (nome, cnpj, telefone1, email, logradouro, bairro, cidade, estado, cep, num_endereco, tipo_id)
+VALUES ('ONG Patinhas Carentes', '11444777000161', '1133334444', 'contato@patinhascarentes.org', 'Avenida dos Animais', 'Jardim Esperança', 'São Paulo', 'SP', '03003000', '200', 3);
 
 -- 5. Inserindo os 5 Animais (Cobrindo todos os status do CHECK)
 
