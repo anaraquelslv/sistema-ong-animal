@@ -18,9 +18,9 @@ public class Documento {
     @Column(nullable = false, length = 11)
     private String cpf;
 
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String rg;
 
-    @Column(nullable = false, length = 10)
+    @Column(length = 10)
     private String orgaoRg;
 }

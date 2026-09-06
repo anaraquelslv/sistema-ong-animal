@@ -20,10 +20,8 @@ public class DocumentoDTO {
     @CPF
     private String cpf;
 
-    @NotBlank
     private String rg;
 
-    @NotBlank
     private String orgaoRg;
 
     public static DocumentoDTO fromEntity(Documento documento) {

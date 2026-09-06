@@ -18,7 +18,7 @@ public class Contato {
     @Column(name = "telefone1", length = 15, nullable = false)
     private String telefonePrincipal;
 
-    @Column(name = "telefone2", length = 15, nullable = false)
+    @Column(name = "telefone2", length = 15)
     private String telefoneSecundario;
 
     // TODO Adicionar validação Unique e verificar resposta da exceção

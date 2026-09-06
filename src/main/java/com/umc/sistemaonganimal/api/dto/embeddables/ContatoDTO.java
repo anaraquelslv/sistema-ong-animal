@@ -19,7 +19,6 @@ public class ContatoDTO {
     @NotBlank
     private String telefonePrincipal;
 
-    @NotBlank
     private String telefoneSecundario;
 
     @Email
