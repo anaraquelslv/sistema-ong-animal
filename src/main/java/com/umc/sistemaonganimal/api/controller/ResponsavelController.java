@@ -38,18 +38,14 @@ public class ResponsavelController {
     }
 
     @PutMapping("/{responsavelId}")
-    public ResponsavelResponseDTO atualizar(@PathVariable Long responsavelId,
-            @RequestBody @Valid ResponsavelRequestDTO responsavelDTO) {
+    public ResponsavelResponseDTO atualizar(@PathVariable Long responsavelId, @RequestBody @Valid ResponsavelRequestDTO responsavelDTO) {
         Responsavel responsavelAtualizar = responsavelService.buscarPorId(responsavelId);
 
         responsavelAtualizar.setNome(responsavelDTO.getNome());
-        responsavelAtualizar.setDocumento(
-                responsavelDTO.getDocumento() != null ? responsavelDTO.getDocumento().toEntity() : null);
+        responsavelAtualizar.setDocumento(responsavelDTO.getDocumento() != null ? responsavelDTO.getDocumento().toEntity() : null);
         responsavelAtualizar.setCnpj(responsavelDTO.getCnpj());
-        responsavelAtualizar.setContato(
-                responsavelDTO.getContato() != null ? responsavelDTO.getContato().toEntity() : null);
-        responsavelAtualizar.setEndereco(
-                responsavelDTO.getEndereco() != null ? responsavelDTO.getEndereco().toEntity() : null);
+        responsavelAtualizar.setContato(responsavelDTO.getContato() != null ? responsavelDTO.getContato().toEntity() : null);
+        responsavelAtualizar.setEndereco(responsavelDTO.getEndereco() != null ? responsavelDTO.getEndereco().toEntity() : null);
         responsavelAtualizar.setQtdAnimais(responsavelDTO.getQtdAnimais());
 
         Responsavel responsavel = responsavelService.salvar(responsavelAtualizar);
