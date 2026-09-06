@@ -5,6 +5,7 @@ import com.umc.sistemaonganimal.domain.exception.DomainException;
 import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.model.Raca;
+import com.umc.sistemaonganimal.domain.model.Responsavel;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalStatus;
 import com.umc.sistemaonganimal.domain.repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class AnimalService {
     @Autowired
     private RacaService racaService;
 
+    @Autowired
+    private ResponsavelService responsavelService;
+
     public List<Animal> listar() {
         return animalRepository.findAll();
     }
@@ -40,6 +44,10 @@ public class AnimalService {
         Long racaId = animal.getRaca().getId();
         Raca raca = racaService.buscarPorId(racaId);
         animal.setRaca(raca);
+
+        Long responsavelId = animal.getResponsavel().getId();
+        Responsavel responsavel = responsavelService.buscarPorId(responsavelId);
+        animal.setResponsavel(responsavel);
 
         if (animal.getStatus().equals(AnimalStatus.ADOTADO)) {
             if (animal.getAdotante() == null || animal.getAdotante().getId() == null) {

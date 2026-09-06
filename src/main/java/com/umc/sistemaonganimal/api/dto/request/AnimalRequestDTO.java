@@ -3,6 +3,7 @@ package com.umc.sistemaonganimal.api.dto.request;
 import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.model.Raca;
+import com.umc.sistemaonganimal.domain.model.Responsavel;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalPorte;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalSexo;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalStatus;
@@ -58,6 +59,9 @@ public class AnimalRequestDTO {
 
     private Long adotanteId;
 
+    @NotNull
+    private Long responsavelId;
+
     public Animal toEntity() {
         return Animal.builder()
                 .nome(nome)
@@ -73,6 +77,7 @@ public class AnimalRequestDTO {
                 .observacao(observacao)
                 .raca(Raca.builder().id(racaId).build())
                 .adotante(adotanteId != null ? Adotante.builder().id(adotanteId).build() : null)
+                .responsavel(Responsavel.builder().id(responsavelId).build())
                 .build();
     }
 }

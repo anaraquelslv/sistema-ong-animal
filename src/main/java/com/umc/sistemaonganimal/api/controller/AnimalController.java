@@ -5,6 +5,7 @@ import com.umc.sistemaonganimal.api.dto.response.AnimalResponseDTO;
 import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.model.Raca;
+import com.umc.sistemaonganimal.domain.model.Responsavel;
 import com.umc.sistemaonganimal.domain.service.AnimalService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class AnimalController {
         animalAtualizar.setAdotante(animalDTO.getAdotanteId() != null
                 ? Adotante.builder().id(animalDTO.getAdotanteId()).build()
                 : null);
+        animalAtualizar.setResponsavel(Responsavel.builder().id(animalDTO.getResponsavelId()).build());
 
         Animal animal = animalService.salvar(animalAtualizar);
         return AnimalResponseDTO.fromEntity(animal);

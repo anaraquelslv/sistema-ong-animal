@@ -5,6 +5,7 @@ import com.umc.sistemaonganimal.domain.exception.AdotanteNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Adotante;
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.model.Raca;
+import com.umc.sistemaonganimal.domain.model.Responsavel;
 import com.umc.sistemaonganimal.domain.model.embeddables.Contato;
 import com.umc.sistemaonganimal.domain.model.embeddables.DadosDemograficos;
 import com.umc.sistemaonganimal.domain.model.embeddables.Documento;
@@ -52,6 +53,12 @@ class AdotanteServiceIT {
     // qual raça específica é (evita acoplar o teste ao conteúdo do fixture).
     @Autowired
     private RacaService racaService;
+
+    // Usado só para obter o id de um responsável já existente no banco, sem
+    // depender de qual responsável específico é (evita acoplar o teste ao
+    // conteúdo do fixture).
+    @Autowired
+    private ResponsavelService responsavelService;
 
     // Injeta o EntityManager (JPA) diretamente, para poder limpar o contexto de
     // persistência entre a exclusão e a busca seguinte (ver comentário no primeiro
@@ -160,6 +167,7 @@ class AdotanteServiceIT {
     void excluir_comAnimalAdotadoVinculado_deveLancarAdotanteInUseException() {
         Adotante adotanteCriado = criarAdotante();
         Raca racaExistente = racaService.listar().get(0);
+        Responsavel responsavelExistente = responsavelService.listar().get(0);
 
         Animal animal = Animal.builder()
                 .nome("Animal adotado de teste")
@@ -172,6 +180,7 @@ class AdotanteServiceIT {
                 .dataSaida(LocalDate.now())
                 .raca(Raca.builder().id(racaExistente.getId()).build())
                 .adotante(Adotante.builder().id(adotanteCriado.getId()).build())
+                .responsavel(Responsavel.builder().id(responsavelExistente.getId()).build())
                 .build();
         animalService.salvar(animal);
 

@@ -76,6 +76,10 @@ public class Animal {
     @JoinColumn(name = "adotante_id")
     private Adotante adotante;
 
+    @ManyToOne
+    @JoinColumn(name = "responsavel_id", nullable = false)
+    private Responsavel responsavel;
+
     @Builder.Default
     @Column(nullable = false)
     private boolean ativo = true;

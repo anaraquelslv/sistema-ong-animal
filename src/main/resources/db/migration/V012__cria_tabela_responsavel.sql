@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS responsavel(
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(11),
+    rg VARCHAR(20),
+    orgao_rg VARCHAR(10),
+    cnpj VARCHAR(14),
+    telefone1 VARCHAR(15) NOT NULL,
+    telefone2 VARCHAR(15),
+    email VARCHAR(100),
+    instagram VARCHAR(50),
+    qtd_animais INTEGER,
+    logradouro VARCHAR(100) NOT NULL,
+    bairro VARCHAR(50) NOT NULL,
+    cidade VARCHAR(50) NOT NULL,
+    estado VARCHAR(2) NOT NULL,
+    cep VARCHAR(8) NOT NULL,
+    num_endereco VARCHAR(10) NOT NULL,
+    complemento VARCHAR(50),
+    ativo BOOLEAN NOT NULL DEFAULT TRUE
+);

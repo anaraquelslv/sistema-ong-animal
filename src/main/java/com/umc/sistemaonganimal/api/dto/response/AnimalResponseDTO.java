@@ -47,6 +47,8 @@ public class AnimalResponseDTO {
 
     private AdotanteResponseDTO adotante;
 
+    private ResponsavelResponseDTO responsavel;
+
     public static AnimalResponseDTO fromEntity(Animal animal) {
         if (animal == null) {
             return null;
@@ -66,6 +68,7 @@ public class AnimalResponseDTO {
                 .observacao(animal.getObservacao())
                 .raca(RacaResponseDTO.fromEntity(animal.getRaca()))
                 .adotante(AdotanteResponseDTO.fromEntity(animal.getAdotante()))
+                .responsavel(ResponsavelResponseDTO.fromEntity(animal.getResponsavel()))
                 .build();
     }
 }

@@ -9,4 +9,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     boolean existsByRacaId(Long racaId);
 
     boolean existsByAdotanteId(Long adotanteId);
+
+    boolean existsByResponsavelId(Long responsavelId);
 }

@@ -3,6 +3,7 @@ package com.umc.sistemaonganimal.domain.service;
 import com.umc.sistemaonganimal.domain.exception.AnimalNotFoundException;
 import com.umc.sistemaonganimal.domain.model.Animal;
 import com.umc.sistemaonganimal.domain.model.Raca;
+import com.umc.sistemaonganimal.domain.model.Responsavel;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalPorte;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalSexo;
 import com.umc.sistemaonganimal.domain.model.enums.animal.AnimalStatus;
@@ -40,6 +41,11 @@ class AnimalServiceIT {
     @Autowired
     private RacaService racaService;
 
+    // Usado só para obter o id de um responsável já existente no banco, sem depender
+    // de qual responsável específico é (evita acoplar o teste ao conteúdo do fixture).
+    @Autowired
+    private ResponsavelService responsavelService;
+
     // Injeta o EntityManager (JPA) diretamente, para poder limpar o contexto de
     // persistência entre a exclusão e a busca seguinte (ver comentário no teste
     // abaixo que usa flush()/clear()).
@@ -53,8 +59,12 @@ class AnimalServiceIT {
         // satisfazer o vínculo obrigatório Animal -> Raca.
         Raca racaExistente = racaService.listar().get(0);
 
+        // Pega um responsável qualquer já cadastrado no banco (não importa qual), só
+        // para satisfazer o vínculo obrigatório Animal -> Responsavel.
+        Responsavel responsavelExistente = responsavelService.listar().get(0);
+
         // Monta um Animal válido em memória, com todos os campos obrigatórios
-        // preenchidos, vinculado à raça obtida acima.
+        // preenchidos, vinculado à raça e ao responsável obtidos acima.
         Animal animal = Animal.builder()
                 .nome("Animal de teste")
                 .idadeMeses(1)
@@ -64,6 +74,7 @@ class AnimalServiceIT {
                 .castrado(true)
                 .dataResgate(LocalDate.now())
                 .raca(Raca.builder().id(racaExistente.getId()).build())
+                .responsavel(Responsavel.builder().id(responsavelExistente.getId()).build())
                 .build();
 
         // Persiste o Animal via service (não direto no repository) para passar
