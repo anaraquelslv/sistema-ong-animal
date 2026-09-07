@@ -8,7 +8,6 @@ import com.umc.sistemaonganimal.domain.model.Tipo;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,9 +42,6 @@ public class ResponsavelRequestDTO {
     @Valid
     private EnderecoDTO endereco;
 
-    @PositiveOrZero
-    private Integer qtdAnimais;
-
     @NotNull
     private Long tipoId;
 
@@ -56,7 +52,6 @@ public class ResponsavelRequestDTO {
                 .cnpj(cnpj)
                 .contato(contato != null ? contato.toEntity() : null)
                 .endereco(endereco != null ? endereco.toEntity() : null)
-                .qtdAnimais(qtdAnimais)
                 .tipo(Tipo.builder().id(tipoId).build())
                 .build();
     }

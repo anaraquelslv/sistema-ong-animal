@@ -15,4 +15,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     boolean existsByResponsavelId(Long responsavelId);
 
     List<Animal> findByResponsavelId(Long responsavelId);
+
+    long countByResponsavelId(Long responsavelId);
 }

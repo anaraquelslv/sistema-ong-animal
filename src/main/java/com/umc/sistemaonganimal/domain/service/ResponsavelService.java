@@ -41,6 +41,10 @@ public class ResponsavelService {
         return animalRepository.findByResponsavelId(responsavelId);
     }
 
+    public long contarAnimaisVinculados(Long responsavelId) {
+        return animalRepository.countByResponsavelId(responsavelId);
+    }
+
     public Responsavel salvar(Responsavel responsavel) {
         Tipo tipo = tipoService.buscarPorId(responsavel.getTipo().getId());
         responsavel.setTipo(tipo);

@@ -81,7 +81,6 @@ class ResponsavelControllerIT {
                         .cep("01001000")
                         .numero("100")
                         .build())
-                .qtdAnimais(3)
                 .tipoId(tipoRepository.findAll().get(0).getId())
                 .build();
     }

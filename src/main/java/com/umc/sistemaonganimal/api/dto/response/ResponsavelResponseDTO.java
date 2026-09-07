@@ -32,17 +32,22 @@ public class ResponsavelResponseDTO {
 
     private EnderecoDTO endereco;
 
-    private Integer qtdAnimais;
+    private Long qtdAnimais;
 
     private TipoResponseDTO tipo;
 
     private List<AnimalResponseDTO> animaisVinculados;
 
+    // qtdAnimais fica null aqui para evitar uma query de contagem extra por registro aninhado (ex.: dentro de AnimalResponseDTO)
     public static ResponsavelResponseDTO fromEntity(Responsavel responsavel) {
-        return fromEntity(responsavel, null);
+        return fromEntity(responsavel, null, null);
     }
 
-    public static ResponsavelResponseDTO fromEntity(Responsavel responsavel, List<Animal> animaisVinculados) {
+    public static ResponsavelResponseDTO fromEntity(Responsavel responsavel, Long qtdAnimais) {
+        return fromEntity(responsavel, qtdAnimais, null);
+    }
+
+    public static ResponsavelResponseDTO fromEntity(Responsavel responsavel, Long qtdAnimais, List<Animal> animaisVinculados) {
         if (responsavel == null) {
             return null;
         }
@@ -53,7 +58,7 @@ public class ResponsavelResponseDTO {
                 .cnpj(responsavel.getCnpj())
                 .contato(ContatoDTO.fromEntity(responsavel.getContato()))
                 .endereco(EnderecoDTO.fromEntity(responsavel.getEndereco()))
-                .qtdAnimais(responsavel.getQtdAnimais())
+                .qtdAnimais(qtdAnimais)
                 .tipo(TipoResponseDTO.fromEntity(responsavel.getTipo()))
                 .animaisVinculados(animaisVinculados != null
                         ? animaisVinculados.stream().map(AnimalResponseDTO::fromEntity).toList()
